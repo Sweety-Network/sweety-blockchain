@@ -27,7 +27,7 @@ network_overrides: &network_overrides
       address_prefix: "txfx"
 
 selected_network: &selected_network "mainnet"
-ALERTS_URL: https://download.flaxnetwork.org/notify/mainnet_alert.txt
+ALERTS_URL: https://download.kiwihealthcare.network/notify/mainnet_alert.txt
 FLAX_ALERTS_PUBKEY: a88dc9b53e21088dcd53347eda53b533aec7cd5ff267c3968b1dfc0dc132e39575cf401f0d6bc9952404dbbfc30731c5
 
 # public ssl ca is included in source code
@@ -256,7 +256,7 @@ full_node:
   # List of trusted DNS seeders to bootstrap from.
   # If you modify this, please change the hardcode as well from FullNode.set_server()
   dns_servers:
-    - "dns-introducer.flaxnetwork.org"
+    - "dns-introducer.kiwihealthcare.network"
   farmer_peer:
       host: *self_hostname
       port: 6885
@@ -264,7 +264,7 @@ full_node:
       host: *self_hostname
       port: 6886
   introducer_peer:
-      host: introducer.flaxnetwork.org  # Flax AWS introducer IPv4/IPv6
+      host: introducer.kiwihealthcare.network  # Flax AWS introducer IPv4/IPv6
       port: 6888
   wallet_peer:
     host: *self_hostname
@@ -348,7 +348,7 @@ wallet:
   recent_peer_threshold: 6000
 
   introducer_peer:
-    host: introducer.flaxnetwork.org # Flax AWS introducer IPv4/IPv6
+    host: introducer.kiwihealthcare.network # Flax AWS introducer IPv4/IPv6
     port: 6888
 
   ssl:

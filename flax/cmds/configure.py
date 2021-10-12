@@ -93,8 +93,8 @@ def configure(
         if testnet == "true" or testnet == "t":
             print("Setting Testnet")
             testnet_port = "56888"
-            testnet_introducer = "beta1_introducer.flaxnetwork.org"
-            testnet_dns_introducer = "dns-introducer-testnet7.flaxnetwork.org"
+            testnet_introducer = "beta1_introducer.kiwihealthcare.network"
+            testnet_dns_introducer = "dns-introducer-testnet7.kiwihealthcare.network"
             testnet = "testnet7"
             config["full_node"]["port"] = int(testnet_port)
             config["full_node"]["introducer_peer"]["port"] = int(testnet_port)
@@ -120,8 +120,8 @@ def configure(
         elif testnet == "false" or testnet == "f":
             print("Setting Mainnet")
             mainnet_port = "6888"
-            mainnet_introducer = "introducer.flaxnetwork.org"
-            mainnet_dns_introducer = "dns-introducer.flaxnetwork.org"
+            mainnet_introducer = "introducer.kiwihealthcare.network"
+            mainnet_dns_introducer = "dns-introducer.kiwihealthcare.network"
             net = "mainnet"
             config["full_node"]["port"] = int(mainnet_port)
             config["full_node"]["introducer_peer"]["port"] = int(mainnet_port)

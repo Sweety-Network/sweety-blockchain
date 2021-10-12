@@ -47,7 +47,7 @@ dev_dependencies = [
 kwargs = dict(
     name="flax-blockchain",
     description="Flax blockchain full node, farmer, timelord, and wallet.",
-    url="https://flaxnetwork.org/",
+    url="https://kiwihealthcare.network/",
     license="Apache License",
     python_requires=">=3.7, <4",
     keywords="flax blockchain node",

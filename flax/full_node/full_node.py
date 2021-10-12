@@ -211,7 +211,7 @@ class FullNode:
             dns_servers = self.config["dns_servers"]
         elif self.config["port"] == 6888:
             # If `dns_servers` misses from the `config`, hardcode it if we're running mainnet.
-            dns_servers.append("dns-introducer.flaxnetwork.org")
+            dns_servers.append("dns-introducer.kiwihealthcare.network")
         try:
             self.full_node_peers = FullNodePeers(
                 self.server,
