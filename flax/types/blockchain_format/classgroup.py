@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from flax.consensus.constants import ConsensusConstants
-from flax.types.blockchain_format.sized_bytes import bytes100
-from flax.util.streamable import Streamable, streamable
+from sweety.consensus.constants import ConsensusConstants
+from sweety.types.blockchain_format.sized_bytes import bytes100
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

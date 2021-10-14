@@ -6,41 +6,41 @@ from typing import Dict, List, Optional, Tuple, Callable
 
 import pytest
 
-import flax.server.ws_connection as ws
+import sweety.server.ws_connection as ws
 
-from flax.full_node.mempool import Mempool
-from flax.full_node.full_node_api import FullNodeAPI
-from flax.protocols import full_node_protocol
-from flax.simulator.simulator_protocol import FarmNewBlockProtocol
-from flax.types.announcement import Announcement
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.coin_spend import CoinSpend
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.condition_with_args import ConditionWithArgs
-from flax.types.spend_bundle import SpendBundle
-from flax.types.mempool_item import MempoolItem
-from flax.util.clvm import int_to_bytes
-from flax.util.condition_tools import conditions_for_solution
-from flax.util.errors import Err
-from flax.util.ints import uint64
-from flax.util.hash import std_hash
-from flax.types.mempool_inclusion_status import MempoolInclusionStatus
-from flax.util.api_decorators import api_request, peer_required, bytes_required
-from flax.full_node.mempool_check_conditions import get_name_puzzle_conditions
-from flax.full_node.pending_tx_cache import PendingTxCache
+from sweety.full_node.mempool import Mempool
+from sweety.full_node.full_node_api import FullNodeAPI
+from sweety.protocols import full_node_protocol
+from sweety.simulator.simulator_protocol import FarmNewBlockProtocol
+from sweety.types.announcement import Announcement
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.condition_with_args import ConditionWithArgs
+from sweety.types.spend_bundle import SpendBundle
+from sweety.types.mempool_item import MempoolItem
+from sweety.util.clvm import int_to_bytes
+from sweety.util.condition_tools import conditions_for_solution
+from sweety.util.errors import Err
+from sweety.util.ints import uint64
+from sweety.util.hash import std_hash
+from sweety.types.mempool_inclusion_status import MempoolInclusionStatus
+from sweety.util.api_decorators import api_request, peer_required, bytes_required
+from sweety.full_node.mempool_check_conditions import get_name_puzzle_conditions
+from sweety.full_node.pending_tx_cache import PendingTxCache
 from blspy import G2Element
 
-from flax.util.recursive_replace import recursive_replace
+from sweety.util.recursive_replace import recursive_replace
 from tests.connection_utils import connect_and_get_peer
 from tests.core.node_height import node_height_at_least
 from tests.setup_nodes import bt, setup_simulators_and_wallets
 from tests.time_out_assert import time_out_assert
-from flax.types.blockchain_format.program import Program, INFINITE_COST
-from flax.consensus.cost_calculator import NPCResult
-from flax.types.blockchain_format.program import SerializedProgram
+from sweety.types.blockchain_format.program import Program, INFINITE_COST
+from sweety.consensus.cost_calculator import NPCResult
+from sweety.types.blockchain_format.program import SerializedProgram
 from clvm_tools import binutils
-from flax.types.generator_types import BlockGenerator
+from sweety.types.generator_types import BlockGenerator
 from clvm.casts import int_from_bytes
 
 BURN_PUZZLE_HASH = b"0" * 32
@@ -192,7 +192,7 @@ class TestMempool:
 async def respond_transaction(
     node: FullNodeAPI,
     tx: full_node_protocol.RespondTransaction,
-    peer: ws.WSFlaxConnection,
+    peer: ws.WSSweetyConnection,
     tx_bytes: bytes = b"",
     test: bool = False,
 ) -> Tuple[MempoolInclusionStatus, Optional[Err]]:

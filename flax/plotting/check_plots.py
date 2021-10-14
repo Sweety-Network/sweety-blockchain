@@ -7,18 +7,18 @@ from typing import List
 from blspy import G1Element
 from chiapos import Verifier
 
-from flax.plotting.manager import PlotManager
-from flax.plotting.util import (
+from sweety.plotting.manager import PlotManager
+from sweety.plotting.util import (
     PlotRefreshResult,
     PlotsRefreshParameter,
     get_plot_filenames,
     find_duplicate_plot_IDs,
     parse_plot_info,
 )
-from flax.util.config import load_config
-from flax.util.hash import std_hash
-from flax.util.keychain import Keychain
-from flax.wallet.derive_keys import master_sk_to_farmer_sk, master_sk_to_local_sk
+from sweety.util.config import load_config
+from sweety.util.hash import std_hash
+from sweety.util.keychain import Keychain
+from sweety.wallet.derive_keys import master_sk_to_farmer_sk, master_sk_to_local_sk
 
 log = logging.getLogger(__name__)
 
@@ -184,5 +184,5 @@ def check_plots(root_path, num, challenge_start, grep_string, list_duplicates, d
         log.warning(
             f"There are {len(plot_manager.no_key_filenames)} plots with a farmer or pool public key that "
             f"is not on this machine. The farmer private key must be in the keychain in order to "
-            f"farm them, use 'flax keys' to transfer keys. The pool public keys must be in the config.yaml"
+            f"farm them, use 'sweety keys' to transfer keys. The pool public keys must be in the config.yaml"
         )

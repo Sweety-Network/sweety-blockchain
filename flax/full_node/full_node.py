@@ -10,57 +10,57 @@ from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
 import aiosqlite
 from blspy import AugSchemeMPL
 
-import flax.server.ws_connection as ws  # lgtm [py/import-and-import-from]
-from flax.consensus.block_creation import unfinished_block_to_full_block
-from flax.consensus.block_record import BlockRecord
-from flax.consensus.blockchain import Blockchain, ReceiveBlockResult
-from flax.consensus.blockchain_interface import BlockchainInterface
-from flax.consensus.constants import ConsensusConstants
-from flax.consensus.difficulty_adjustment import get_next_sub_slot_iters_and_difficulty
-from flax.consensus.make_sub_epoch_summary import next_sub_epoch_summary
-from flax.consensus.multiprocess_validation import PreValidationResult
-from flax.consensus.pot_iterations import calculate_sp_iters
-from flax.full_node.block_store import BlockStore
-from flax.full_node.bundle_tools import detect_potential_template_generator
-from flax.full_node.coin_store import CoinStore
-from flax.full_node.full_node_store import FullNodeStore
-from flax.full_node.hint_store import HintStore
-from flax.full_node.mempool_manager import MempoolManager
-from flax.full_node.signage_point import SignagePoint
-from flax.full_node.sync_store import SyncStore
-from flax.full_node.weight_proof import WeightProofHandler
-from flax.protocols import farmer_protocol, full_node_protocol, timelord_protocol, wallet_protocol
-from flax.protocols.full_node_protocol import (
+import sweety.server.ws_connection as ws  # lgtm [py/import-and-import-from]
+from sweety.consensus.block_creation import unfinished_block_to_full_block
+from sweety.consensus.block_record import BlockRecord
+from sweety.consensus.blockchain import Blockchain, ReceiveBlockResult
+from sweety.consensus.blockchain_interface import BlockchainInterface
+from sweety.consensus.constants import ConsensusConstants
+from sweety.consensus.difficulty_adjustment import get_next_sub_slot_iters_and_difficulty
+from sweety.consensus.make_sub_epoch_summary import next_sub_epoch_summary
+from sweety.consensus.multiprocess_validation import PreValidationResult
+from sweety.consensus.pot_iterations import calculate_sp_iters
+from sweety.full_node.block_store import BlockStore
+from sweety.full_node.bundle_tools import detect_potential_template_generator
+from sweety.full_node.coin_store import CoinStore
+from sweety.full_node.full_node_store import FullNodeStore
+from sweety.full_node.hint_store import HintStore
+from sweety.full_node.mempool_manager import MempoolManager
+from sweety.full_node.signage_point import SignagePoint
+from sweety.full_node.sync_store import SyncStore
+from sweety.full_node.weight_proof import WeightProofHandler
+from sweety.protocols import farmer_protocol, full_node_protocol, timelord_protocol, wallet_protocol
+from sweety.protocols.full_node_protocol import (
     RequestBlocks,
     RespondBlock,
     RespondBlocks,
     RespondSignagePoint,
 )
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.protocols.wallet_protocol import CoinState, CoinStateUpdate
-from flax.server.node_discovery import FullNodePeers
-from flax.server.outbound_message import Message, NodeType, make_msg
-from flax.server.server import FlaxServer
-from flax.types.blockchain_format.classgroup import ClassgroupElement
-from flax.types.blockchain_format.pool_target import PoolTarget
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.sub_epoch_summary import SubEpochSummary
-from flax.types.blockchain_format.vdf import CompressibleVDFField, VDFInfo, VDFProof
-from flax.types.coin_record import CoinRecord
-from flax.types.end_of_slot_bundle import EndOfSubSlotBundle
-from flax.types.full_block import FullBlock
-from flax.types.header_block import HeaderBlock
-from flax.types.mempool_inclusion_status import MempoolInclusionStatus
-from flax.types.spend_bundle import SpendBundle
-from flax.types.unfinished_block import UnfinishedBlock
-from flax.util.bech32m import encode_puzzle_hash
-from flax.util.check_fork_next_block import check_fork_next_block
-from flax.util.db_wrapper import DBWrapper
-from flax.util.errors import ConsensusError, Err
-from flax.util.ints import uint8, uint32, uint64, uint128
-from flax.util.path import mkdir, path_from_root
-from flax.util.safe_cancel_task import cancel_task_safe
-from flax.util.profiler import profile_task
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.protocols.wallet_protocol import CoinState, CoinStateUpdate
+from sweety.server.node_discovery import FullNodePeers
+from sweety.server.outbound_message import Message, NodeType, make_msg
+from sweety.server.server import SweetyServer
+from sweety.types.blockchain_format.classgroup import ClassgroupElement
+from sweety.types.blockchain_format.pool_target import PoolTarget
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.sub_epoch_summary import SubEpochSummary
+from sweety.types.blockchain_format.vdf import CompressibleVDFField, VDFInfo, VDFProof
+from sweety.types.coin_record import CoinRecord
+from sweety.types.end_of_slot_bundle import EndOfSubSlotBundle
+from sweety.types.full_block import FullBlock
+from sweety.types.header_block import HeaderBlock
+from sweety.types.mempool_inclusion_status import MempoolInclusionStatus
+from sweety.types.spend_bundle import SpendBundle
+from sweety.types.unfinished_block import UnfinishedBlock
+from sweety.util.bech32m import encode_puzzle_hash
+from sweety.util.check_fork_next_block import check_fork_next_block
+from sweety.util.db_wrapper import DBWrapper
+from sweety.util.errors import ConsensusError, Err
+from sweety.util.ints import uint8, uint32, uint64, uint128
+from sweety.util.path import mkdir, path_from_root
+from sweety.util.safe_cancel_task import cancel_task_safe
+from sweety.util.profiler import profile_task
 from datetime import datetime
 
 
@@ -198,7 +198,7 @@ class FullNode:
         if peak is not None:
             await self.weight_proof_handler.create_sub_epoch_segments()
 
-    def set_server(self, server: FlaxServer):
+    def set_server(self, server: SweetyServer):
         self.server = server
         dns_servers = []
         try:
@@ -236,7 +236,7 @@ class FullNode:
         if self.state_changed_callback is not None:
             self.state_changed_callback(change)
 
-    async def short_sync_batch(self, peer: ws.WSFlaxConnection, start_height: uint32, target_height: uint32) -> bool:
+    async def short_sync_batch(self, peer: ws.WSSweetyConnection, start_height: uint32, target_height: uint32) -> bool:
         """
         Tries to sync to a chain which is not too far in the future, by downloading batches of blocks. If the first
         block that we download is not connected to our chain, we return False and do an expensive long sync instead.
@@ -308,7 +308,7 @@ class FullNode:
         return True
 
     async def short_sync_backtrack(
-        self, peer: ws.WSFlaxConnection, peak_height: uint32, target_height: uint32, target_unf_hash: bytes32
+        self, peer: ws.WSSweetyConnection, peak_height: uint32, target_height: uint32, target_unf_hash: bytes32
     ):
         """
         Performs a backtrack sync, where blocks are downloaded one at a time from newest to oldest. If we do not
@@ -364,7 +364,7 @@ class FullNode:
             await asyncio.sleep(sleep_before)
         self._state_changed("peer_changed_peak")
 
-    async def new_peak(self, request: full_node_protocol.NewPeak, peer: ws.WSFlaxConnection):
+    async def new_peak(self, request: full_node_protocol.NewPeak, peer: ws.WSSweetyConnection):
         """
         We have received a notification of a new peak from a peer. This happens either when we have just connected,
         or when the peer has updated their peak.
@@ -441,7 +441,7 @@ class FullNode:
             self._sync_task = asyncio.create_task(self._sync())
 
     async def send_peak_to_timelords(
-        self, peak_block: Optional[FullBlock] = None, peer: Optional[ws.WSFlaxConnection] = None
+        self, peak_block: Optional[FullBlock] = None, peer: Optional[ws.WSSweetyConnection] = None
     ):
         """
         Sends current peak to timelords
@@ -514,7 +514,7 @@ class FullNode:
         else:
             return True
 
-    async def on_connect(self, connection: ws.WSFlaxConnection):
+    async def on_connect(self, connection: ws.WSSweetyConnection):
         """
         Whenever we connect to another node / wallet, send them our current heads. Also send heads to farmers
         and challenges to timelords.
@@ -565,7 +565,7 @@ class FullNode:
             elif connection.connection_type is NodeType.TIMELORD:
                 await self.send_peak_to_timelords()
 
-    def on_disconnect(self, connection: ws.WSFlaxConnection):
+    def on_disconnect(self, connection: ws.WSSweetyConnection):
         self.log.info(f"peer disconnected {connection.get_peer_logging()}")
         self._state_changed("close_connection")
         self._state_changed("sync_mode")
@@ -573,7 +573,7 @@ class FullNode:
             self.sync_store.peer_disconnected(connection.peer_node_id)
         self.remove_subscriptions(connection)
 
-    def remove_subscriptions(self, peer: ws.WSFlaxConnection):
+    def remove_subscriptions(self, peer: ws.WSSweetyConnection):
         # Remove all ph | coin id subscription for this peer
         node_id = peer.peer_node_id
         if node_id in self.peer_puzzle_hash:
@@ -772,7 +772,7 @@ class FullNode:
         )
         batch_size = self.constants.MAX_BLOCK_COUNT_PER_REQUESTS
 
-        async def fetch_block_batches(batch_queue, peers_with_peak: List[ws.WSFlaxConnection]):
+        async def fetch_block_batches(batch_queue, peers_with_peak: List[ws.WSSweetyConnection]):
             try:
                 for start_height in range(fork_point_height, target_peak_sb_height, batch_size):
                     end_height = min(target_peak_sb_height, start_height + batch_size)
@@ -829,7 +829,7 @@ class FullNode:
                 self.blockchain.clean_block_record(end_height - self.constants.BLOCKS_CACHE_SIZE)
 
         loop = asyncio.get_event_loop()
-        batch_queue: asyncio.Queue[Tuple[ws.WSFlaxConnection, List[FullBlock]]] = asyncio.Queue(
+        batch_queue: asyncio.Queue[Tuple[ws.WSSweetyConnection, List[FullBlock]]] = asyncio.Queue(
             loop=loop, maxsize=buffer_size
         )
         fetch_task = asyncio.Task(fetch_block_batches(batch_queue, peers_with_peak))
@@ -898,7 +898,7 @@ class FullNode:
         for peer, changes in changes_for_peer.items():
             if peer not in self.server.all_connections:
                 continue
-            ws_peer: ws.WSFlaxConnection = self.server.all_connections[peer]
+            ws_peer: ws.WSSweetyConnection = self.server.all_connections[peer]
             state = CoinStateUpdate(height, fork_height, peak_hash, list(changes))
             msg = make_msg(ProtocolMessageTypes.coin_state_update, state)
             await ws_peer.send_message(msg)
@@ -906,7 +906,7 @@ class FullNode:
     async def receive_block_batch(
         self,
         all_blocks: List[FullBlock],
-        peer: ws.WSFlaxConnection,
+        peer: ws.WSSweetyConnection,
         fork_point: Optional[uint32],
         wp_summaries: Optional[List[SubEpochSummary]] = None,
     ) -> Tuple[bool, bool, Optional[uint32], Tuple[List[CoinRecord], Dict[bytes, Dict[bytes, CoinRecord]]]]:
@@ -1019,7 +1019,7 @@ class FullNode:
     async def signage_point_post_processing(
         self,
         request: full_node_protocol.RespondSignagePoint,
-        peer: ws.WSFlaxConnection,
+        peer: ws.WSSweetyConnection,
         ip_sub_slot: Optional[EndOfSubSlotBundle],
     ):
         self.log.info(
@@ -1077,7 +1077,7 @@ class FullNode:
         block: FullBlock,
         record: BlockRecord,
         fork_height: uint32,
-        peer: Optional[ws.WSFlaxConnection],
+        peer: Optional[ws.WSSweetyConnection],
         coin_changes: Tuple[List[CoinRecord], Dict[bytes, Dict[bytes32, CoinRecord]]],
     ):
         """
@@ -1228,7 +1228,7 @@ class FullNode:
     async def respond_block(
         self,
         respond_block: full_node_protocol.RespondBlock,
-        peer: Optional[ws.WSFlaxConnection] = None,
+        peer: Optional[ws.WSSweetyConnection] = None,
     ) -> Optional[Message]:
         """
         Receive a full block from a peer full node (or ourselves).
@@ -1391,7 +1391,7 @@ class FullNode:
     async def respond_unfinished_block(
         self,
         respond_unfinished_block: full_node_protocol.RespondUnfinishedBlock,
-        peer: Optional[ws.WSFlaxConnection],
+        peer: Optional[ws.WSSweetyConnection],
         farmed_block: bool = False,
     ):
         """
@@ -1500,7 +1500,7 @@ class FullNode:
                 f"Added unfinished_block {block_hash}, not farmed by us,"
                 f" SP: {block.reward_chain_block.signage_point_index} farmer response time: "
                 f"{time.time() - self.signage_point_times[block.reward_chain_block.signage_point_index]:0.4f}, "
-                f"Pool pk {encode_puzzle_hash(block.foliage.foliage_block_data.pool_target.puzzle_hash, 'xfx')}, "
+                f"Pool pk {encode_puzzle_hash(block.foliage.foliage_block_data.pool_target.puzzle_hash, 'sty')}, "
                 f"validation time: {validation_time:0.4f} seconds, "
                 f"cost: {block.transactions_info.cost if block.transactions_info else 'None'}"
                 f"{percent_full_str}"
@@ -1548,7 +1548,7 @@ class FullNode:
         self._state_changed("unfinished_block")
 
     async def new_infusion_point_vdf(
-        self, request: timelord_protocol.NewInfusionPointVDF, timelord_peer: Optional[ws.WSFlaxConnection] = None
+        self, request: timelord_protocol.NewInfusionPointVDF, timelord_peer: Optional[ws.WSSweetyConnection] = None
     ) -> Optional[Message]:
         # Lookup unfinished blocks
         unfinished_block: Optional[UnfinishedBlock] = self.full_node_store.get_unfinished_block(
@@ -1651,7 +1651,7 @@ class FullNode:
         return None
 
     async def respond_end_of_sub_slot(
-        self, request: full_node_protocol.RespondEndOfSubSlot, peer: ws.WSFlaxConnection
+        self, request: full_node_protocol.RespondEndOfSubSlot, peer: ws.WSSweetyConnection
     ) -> Tuple[Optional[Message], bool]:
 
         fetched_ss = self.full_node_store.get_sub_slot(request.end_of_slot_bundle.challenge_chain.get_hash())
@@ -1739,7 +1739,7 @@ class FullNode:
         self,
         transaction: SpendBundle,
         spend_name: bytes32,
-        peer: Optional[ws.WSFlaxConnection] = None,
+        peer: Optional[ws.WSSweetyConnection] = None,
         test: bool = False,
     ) -> Tuple[MempoolInclusionStatus, Optional[Err]]:
         if self.sync_store.get_sync_mode():
@@ -1948,7 +1948,7 @@ class FullNode:
         if self.server is not None:
             await self.server.send_to_all([msg], NodeType.FULL_NODE)
 
-    async def new_compact_vdf(self, request: full_node_protocol.NewCompactVDF, peer: ws.WSFlaxConnection):
+    async def new_compact_vdf(self, request: full_node_protocol.NewCompactVDF, peer: ws.WSSweetyConnection):
         is_fully_compactified = await self.block_store.is_fully_compactified(request.header_hash)
         if is_fully_compactified is None or is_fully_compactified:
             return False
@@ -1966,7 +1966,7 @@ class FullNode:
             if response is not None and isinstance(response, full_node_protocol.RespondCompactVDF):
                 await self.respond_compact_vdf(response, peer)
 
-    async def request_compact_vdf(self, request: full_node_protocol.RequestCompactVDF, peer: ws.WSFlaxConnection):
+    async def request_compact_vdf(self, request: full_node_protocol.RequestCompactVDF, peer: ws.WSSweetyConnection):
         header_block = await self.blockchain.get_header_block_by_height(
             request.height, request.header_hash, tx_filter=False
         )
@@ -2010,7 +2010,7 @@ class FullNode:
         msg = make_msg(ProtocolMessageTypes.respond_compact_vdf, compact_vdf)
         await peer.send_message(msg)
 
-    async def respond_compact_vdf(self, request: full_node_protocol.RespondCompactVDF, peer: ws.WSFlaxConnection):
+    async def respond_compact_vdf(self, request: full_node_protocol.RespondCompactVDF, peer: ws.WSSweetyConnection):
         field_vdf = CompressibleVDFField(int(request.field_vdf))
         if not await self._can_accept_compact_proof(
             request.vdf_info, request.vdf_proof, request.height, request.header_hash, field_vdf
@@ -2136,7 +2136,7 @@ class FullNode:
 
 
 async def node_next_block_check(
-    peer: ws.WSFlaxConnection, potential_peek: uint32, blockchain: BlockchainInterface
+    peer: ws.WSSweetyConnection, potential_peek: uint32, blockchain: BlockchainInterface
 ) -> bool:
 
     block_response: Optional[Any] = await peer.request_block(full_node_protocol.RequestBlock(potential_peek, True))

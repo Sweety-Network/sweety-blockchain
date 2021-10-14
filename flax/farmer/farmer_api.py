@@ -5,26 +5,26 @@ from typing import Callable, Optional, List, Any, Dict
 import aiohttp
 from blspy import AugSchemeMPL, G2Element, PrivateKey
 
-import flax.server.ws_connection as ws
-from flax.consensus.network_type import NetworkType
-from flax.consensus.pot_iterations import calculate_iterations_quality, calculate_sp_interval_iters
-from flax.farmer.farmer import Farmer
-from flax.protocols import farmer_protocol, harvester_protocol
-from flax.protocols.harvester_protocol import PoolDifficulty
-from flax.protocols.pool_protocol import (
+import sweety.server.ws_connection as ws
+from sweety.consensus.network_type import NetworkType
+from sweety.consensus.pot_iterations import calculate_iterations_quality, calculate_sp_interval_iters
+from sweety.farmer.farmer import Farmer
+from sweety.protocols import farmer_protocol, harvester_protocol
+from sweety.protocols.harvester_protocol import PoolDifficulty
+from sweety.protocols.pool_protocol import (
     get_current_authentication_token,
     PoolErrorCode,
     PostPartialRequest,
     PostPartialPayload,
 )
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.server.outbound_message import NodeType, make_msg
-from flax.server.server import ssl_context_for_root
-from flax.ssl.create_ssl import get_mozilla_ca_crt
-from flax.types.blockchain_format.pool_target import PoolTarget
-from flax.types.blockchain_format.proof_of_space import ProofOfSpace
-from flax.util.api_decorators import api_request, peer_required
-from flax.util.ints import uint32, uint64
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.server.outbound_message import NodeType, make_msg
+from sweety.server.server import ssl_context_for_root
+from sweety.ssl.create_ssl import get_mozilla_ca_crt
+from sweety.types.blockchain_format.pool_target import PoolTarget
+from sweety.types.blockchain_format.proof_of_space import ProofOfSpace
+from sweety.util.api_decorators import api_request, peer_required
+from sweety.util.ints import uint32, uint64
 
 
 class FarmerAPI:
@@ -39,7 +39,7 @@ class FarmerAPI:
     @api_request
     @peer_required
     async def new_proof_of_space(
-        self, new_proof_of_space: harvester_protocol.NewProofOfSpace, peer: ws.WSFlaxConnection
+        self, new_proof_of_space: harvester_protocol.NewProofOfSpace, peer: ws.WSSweetyConnection
     ):
         """
         This is a response from the harvester, for a NewChallenge. Here we check if the proof

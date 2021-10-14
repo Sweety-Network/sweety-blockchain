@@ -6,11 +6,11 @@ import aiosqlite
 import pytest
 from blspy import AugSchemeMPL
 
-from flax.util.db_wrapper import DBWrapper
-from flax.util.ints import uint32
-from flax.wallet.derivation_record import DerivationRecord
-from flax.wallet.util.wallet_types import WalletType
-from flax.wallet.wallet_puzzle_store import WalletPuzzleStore
+from sweety.util.db_wrapper import DBWrapper
+from sweety.util.ints import uint32
+from sweety.wallet.derivation_record import DerivationRecord
+from sweety.wallet.util.wallet_types import WalletType
+from sweety.wallet.wallet_puzzle_store import WalletPuzzleStore
 
 
 @pytest.fixture(scope="module")

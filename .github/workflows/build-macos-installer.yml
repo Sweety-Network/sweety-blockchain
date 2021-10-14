@@ -102,7 +102,7 @@ jobs:
         APPLE_NOTARIZE_PASSWORD: "${{ secrets.APPLE_NOTARIZE_PASSWORD }}"
       run: |
         . ./activate
-        cd ./flax-blockchain-gui
+        cd ./sweety-blockchain-gui
         git status
         cd ../build_scripts
         sh build_macos.sh
@@ -110,11 +110,11 @@ jobs:
       id: version_number
       run: |
         . ./activate
-        echo "::set-output name=FLAX_INSTALLER_VERSION::$(flax version)"
+        echo "::set-output name=SWEETY_INSTALLER_VERSION::$(sweety version)"
     - name: Upload MacOS artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: Flax-Installer-on-MacOS-10.15-dmg
+        name: Sweety-Installer-on-MacOS-10.15-dmg
         path: ${{ github.workspace }}/build_scripts/final_installer/
 
     - name: Install AWS CLI
@@ -132,8 +132,8 @@ jobs:
     - name: Rename Artifact
       run: |
         ls
-        mv ${{ github.workspace }}/build_scripts/final_installer/Flax-${{ steps.version_number.outputs.FLAX_INSTALLER_VERSION }}.dmg  ${{ github.workspace }}/build_scripts/final_installer/Flax-Catalina-${{ steps.version_number.outputs.FLAX_INSTALLER_VERSION }}.dmg
+        mv ${{ github.workspace }}/build_scripts/final_installer/Sweety-${{ steps.version_number.outputs.SWEETY_INSTALLER_VERSION }}.dmg  ${{ github.workspace }}/build_scripts/final_installer/Sweety-Catalina-${{ steps.version_number.outputs.SWEETY_INSTALLER_VERSION }}.dmg
     - name: Create Checksums
       run: |
         ls
-        shasum -a 256 ${{ github.workspace }}/build_scripts/final_installer/Flax-Catalina-${{ steps.version_number.outputs.FLAX_INSTALLER_VERSION }}.dmg > ${{ github.workspace }}/build_scripts/final_installer/Flax-Catalina-${{ steps.version_number.outputs.FLAX_INSTALLER_VERSION }}.dmg.sha256
+        shasum -a 256 ${{ github.workspace }}/build_scripts/final_installer/Sweety-Catalina-${{ steps.version_number.outputs.SWEETY_INSTALLER_VERSION }}.dmg > ${{ github.workspace }}/build_scripts/final_installer/Sweety-Catalina-${{ steps.version_number.outputs.SWEETY_INSTALLER_VERSION }}.dmg.sha256

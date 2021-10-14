@@ -2,11 +2,11 @@ from typing import Tuple
 
 from chiavdf import prove
 
-from flax.consensus.constants import ConsensusConstants
-from flax.types.blockchain_format.classgroup import ClassgroupElement
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.vdf import VDFInfo, VDFProof
-from flax.util.ints import uint8, uint64
+from sweety.consensus.constants import ConsensusConstants
+from sweety.types.blockchain_format.classgroup import ClassgroupElement
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.vdf import VDFInfo, VDFProof
+from sweety.util.ints import uint8, uint64
 
 
 def get_vdf_info_and_proof(

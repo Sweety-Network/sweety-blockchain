@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.condition_with_args import ConditionWithArgs
-from flax.util.condition_tools import ConditionOpcode
-from flax.util.streamable import Streamable, streamable
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.condition_with_args import ConditionWithArgs
+from sweety.util.condition_tools import ConditionOpcode
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

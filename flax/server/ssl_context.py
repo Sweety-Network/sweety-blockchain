@@ -23,8 +23,8 @@ def private_ssl_ca_paths(path: Path, config: Dict):
     )
 
 
-def flax_ssl_ca_paths(path: Path, config: Dict):
+def sweety_ssl_ca_paths(path: Path, config: Dict):
     return (
-        path / config["flax_ssl_ca"]["crt"],
-        path / config["flax_ssl_ca"]["key"],
+        path / config["sweety_ssl_ca"]["crt"],
+        path / config["sweety_ssl_ca"]["key"],
     )

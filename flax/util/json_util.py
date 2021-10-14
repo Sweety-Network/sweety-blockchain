@@ -4,7 +4,7 @@ from typing import Any
 
 from aiohttp import web
 
-from flax.wallet.util.wallet_types import WalletType
+from sweety.wallet.util.wallet_types import WalletType
 
 
 class EnhancedJSONEncoder(json.JSONEncoder):

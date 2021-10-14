@@ -1,13 +1,13 @@
 from clvm_tools import binutils
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.program import Program
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.program import Program
 from typing import List, Optional, Tuple
 from blspy import G1Element
-from flax.types.blockchain_format.coin import Coin
-from flax.types.coin_spend import CoinSpend
-from flax.util.ints import uint64
-from flax.wallet.puzzles.load_clvm import load_clvm
-from flax.types.condition_opcodes import ConditionOpcode
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.coin_spend import CoinSpend
+from sweety.util.ints import uint64
+from sweety.wallet.puzzles.load_clvm import load_clvm
+from sweety.types.condition_opcodes import ConditionOpcode
 
 
 SINGLETON_TOP_LAYER_MOD = load_clvm("singleton_top_layer.clvm")

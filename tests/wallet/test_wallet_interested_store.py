@@ -4,11 +4,11 @@ from secrets import token_bytes
 import aiosqlite
 import pytest
 
-from flax.types.blockchain_format.coin import Coin
-from flax.util.db_wrapper import DBWrapper
-from flax.util.ints import uint64
+from sweety.types.blockchain_format.coin import Coin
+from sweety.util.db_wrapper import DBWrapper
+from sweety.util.ints import uint64
 
-from flax.wallet.wallet_interested_store import WalletInterestedStore
+from sweety.wallet.wallet_interested_store import WalletInterestedStore
 
 
 @pytest.fixture(scope="module")

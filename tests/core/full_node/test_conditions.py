@@ -15,17 +15,17 @@ from blspy import G2Element
 
 from clvm_tools.binutils import assemble
 
-from flax.consensus.blockchain import ReceiveBlockResult
-from flax.consensus.constants import ConsensusConstants
-from flax.types.announcement import Announcement
-from flax.types.blockchain_format.program import Program
-from flax.types.coin_record import CoinRecord
-from flax.types.coin_spend import CoinSpend
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.full_block import FullBlock
-from flax.types.spend_bundle import SpendBundle
-from flax.util.errors import Err
-from flax.util.ints import uint32
+from sweety.consensus.blockchain import ReceiveBlockResult
+from sweety.consensus.constants import ConsensusConstants
+from sweety.types.announcement import Announcement
+from sweety.types.blockchain_format.program import Program
+from sweety.types.coin_record import CoinRecord
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.full_block import FullBlock
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.errors import Err
+from sweety.util.ints import uint32
 from tests.block_tools import create_block_tools, test_constants
 from tests.util.keyring import TempKeyring
 

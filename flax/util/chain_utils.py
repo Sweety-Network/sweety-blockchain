@@ -2,11 +2,11 @@ from typing import List
 
 from clvm.casts import int_from_bytes
 
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.program import SerializedProgram
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.util.condition_tools import (
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.program import SerializedProgram
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.util.condition_tools import (
     conditions_dict_for_solution,
     created_outputs_for_conditions_dict,
 )

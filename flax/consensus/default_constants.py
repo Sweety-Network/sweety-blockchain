@@ -1,4 +1,4 @@
-from flax.util.ints import uint64
+from sweety.util.ints import uint64
 
 from .constants import ConsensusConstants
 
@@ -29,7 +29,7 @@ testnet_kwargs = {
     # We override this value based on the chain being run (testnet0, testnet1, mainnet, etc)
     # Default used for tests is std_hash(b'')
     "GENESIS_CHALLENGE": bytes.fromhex("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"),
-    # Forks of flax should change this value to provide replay attack protection. This is set to mainnet genesis chall
+    # Forks of sweety should change this value to provide replay attack protection. This is set to mainnet genesis chall
     "AGG_SIG_ME_ADDITIONAL_DATA": bytes.fromhex("9b9ffca948750d8b41ac755da213461e9d2253ec7bfce80695d78f7fe7d55112"),
     "GENESIS_PRE_FARM_POOL_PUZZLE_HASH": bytes.fromhex(
         "e8e245e2e6536e17fd7cbc2e3bd90de06f55362ee3c84cea5a68391e5bad7ef6"

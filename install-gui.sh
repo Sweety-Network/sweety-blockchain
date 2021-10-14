@@ -4,17 +4,17 @@ export NODE_OPTIONS="--max-old-space-size=3000"
 
 
 if [ -z "$VIRTUAL_ENV" ]; then
-  echo "This requires the flax python virtual environment."
+  echo "This requires the sweety python virtual environment."
   echo "Execute '. ./activate' before running."
 	exit 1
 fi
 
 if [ "$(id -u)" = 0 ]; then
-  echo "The Flax Blockchain GUI can not be installed or run by the root user."
+  echo "The Sweety Blockchain GUI can not be installed or run by the root user."
 	exit 1
 fi
 
-# Allows overriding the branch or commit to build in flax-blockchain-gui
+# Allows overriding the branch or commit to build in sweety-blockchain-gui
 SUBMODULE_BRANCH=$1
 
 UBUNTU=false
@@ -90,7 +90,7 @@ if [ ! "$CI" ]; then
 	echo "Running git submodule update."
 	echo ""
 	git submodule update
-	cd flax-blockchain-gui
+	cd sweety-blockchain-gui
 
 	if [ "$SUBMODULE_BRANCH" ];
 	then
@@ -111,6 +111,6 @@ else
 fi
 
 echo ""
-echo "Flax blockchain install-gui.sh completed."
+echo "Sweety blockchain install-gui.sh completed."
 echo ""
-echo "Type 'cd flax-blockchain-gui' and then 'npm run electron &' to start the GUI."
+echo "Type 'cd sweety-blockchain-gui' and then 'npm run electron &' to start the GUI."

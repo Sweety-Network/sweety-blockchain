@@ -1,7 +1,7 @@
 import unittest
 from blspy import AugSchemeMPL
-from flax.util import cached_bls
-from flax.util.lru_cache import LRUCache
+from sweety.util import cached_bls
+from sweety.util.lru_cache import LRUCache
 
 
 class TestCachedBLS(unittest.TestCase):

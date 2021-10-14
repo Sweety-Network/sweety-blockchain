@@ -7,11 +7,11 @@ from pathlib import Path
 import aiosqlite
 import pytest
 
-from flax.consensus.blockchain import Blockchain
-from flax.full_node.block_store import BlockStore
-from flax.full_node.coin_store import CoinStore
-from flax.full_node.hint_store import HintStore
-from flax.util.db_wrapper import DBWrapper
+from sweety.consensus.blockchain import Blockchain
+from sweety.full_node.block_store import BlockStore
+from sweety.full_node.coin_store import CoinStore
+from sweety.full_node.hint_store import HintStore
+from sweety.util.db_wrapper import DBWrapper
 from tests.setup_nodes import bt, test_constants
 
 log = logging.getLogger(__name__)

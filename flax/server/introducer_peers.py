@@ -3,8 +3,8 @@ import time
 from typing import Set, List, Optional
 from dataclasses import dataclass
 
-from flax.types.peer_info import PeerInfo
-from flax.util.ints import uint64, uint16
+from sweety.types.peer_info import PeerInfo
+from sweety.util.ints import uint64, uint16
 
 
 @dataclass(frozen=False)

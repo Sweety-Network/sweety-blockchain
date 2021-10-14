@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from flax.consensus.condition_costs import ConditionCost
-from flax.types.blockchain_format.program import SerializedProgram
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.name_puzzle_condition import NPC
-from flax.util.ints import uint64, uint16
-from flax.util.streamable import Streamable, streamable
+from sweety.consensus.condition_costs import ConditionCost
+from sweety.types.blockchain_format.program import SerializedProgram
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.name_puzzle_condition import NPC
+from sweety.util.ints import uint64, uint16
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

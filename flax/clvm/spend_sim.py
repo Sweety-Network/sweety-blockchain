@@ -2,35 +2,35 @@ import aiosqlite
 
 from typing import Optional, List, Dict, Tuple, Any
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.program import Program, SerializedProgram
-from flax.util.ints import uint64, uint32
-from flax.util.hash import std_hash
-from flax.util.errors import Err
-from flax.util.db_wrapper import DBWrapper
-from flax.types.coin_record import CoinRecord
-from flax.types.spend_bundle import SpendBundle
-from flax.types.generator_types import BlockGenerator
-from flax.types.mempool_inclusion_status import MempoolInclusionStatus
-from flax.types.coin_spend import CoinSpend
-from flax.full_node.bundle_tools import simple_solution_generator
-from flax.full_node.mempool_manager import MempoolManager
-from flax.full_node.coin_store import CoinStore
-from flax.full_node.mempool_check_conditions import get_puzzle_and_solution_for_coin
-from flax.consensus.constants import ConsensusConstants
-from flax.consensus.default_constants import DEFAULT_CONSTANTS
-from flax.consensus.coinbase import create_pool_coin, create_farmer_coin
-from flax.consensus.block_rewards import calculate_pool_reward, calculate_base_farmer_reward
-from flax.consensus.cost_calculator import NPCResult
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.program import Program, SerializedProgram
+from sweety.util.ints import uint64, uint32
+from sweety.util.hash import std_hash
+from sweety.util.errors import Err
+from sweety.util.db_wrapper import DBWrapper
+from sweety.types.coin_record import CoinRecord
+from sweety.types.spend_bundle import SpendBundle
+from sweety.types.generator_types import BlockGenerator
+from sweety.types.mempool_inclusion_status import MempoolInclusionStatus
+from sweety.types.coin_spend import CoinSpend
+from sweety.full_node.bundle_tools import simple_solution_generator
+from sweety.full_node.mempool_manager import MempoolManager
+from sweety.full_node.coin_store import CoinStore
+from sweety.full_node.mempool_check_conditions import get_puzzle_and_solution_for_coin
+from sweety.consensus.constants import ConsensusConstants
+from sweety.consensus.default_constants import DEFAULT_CONSTANTS
+from sweety.consensus.coinbase import create_pool_coin, create_farmer_coin
+from sweety.consensus.block_rewards import calculate_pool_reward, calculate_base_farmer_reward
+from sweety.consensus.cost_calculator import NPCResult
 
 """
-The purpose of this file is to provide a lightweight simulator for the testing of Flaxlisp smart contracts.
+The purpose of this file is to provide a lightweight simulator for the testing of Sweetylisp smart contracts.
 
 The Node object uses actual MempoolManager, Mempool and CoinStore objects, while substituting FullBlock and
 BlockRecord objects for trimmed down versions.
 
-There is also a provided NodeClient object which implements many of the methods from flax.rpc.full_node_rpc_client
+There is also a provided NodeClient object which implements many of the methods from sweety.rpc.full_node_rpc_client
 and is designed so that you could test with it and then swap in a real rpc client that uses the same code you tested.
 """
 

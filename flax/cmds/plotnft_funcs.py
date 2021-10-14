@@ -9,21 +9,21 @@ import time
 from pprint import pprint
 from typing import List, Dict, Optional, Callable
 
-from flax.cmds.wallet_funcs import print_balance, wallet_coin_unit
-from flax.pools.pool_wallet_info import PoolWalletInfo, PoolSingletonState
-from flax.protocols.pool_protocol import POOL_PROTOCOL_VERSION
-from flax.rpc.farmer_rpc_client import FarmerRpcClient
-from flax.rpc.wallet_rpc_client import WalletRpcClient
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.server.server import ssl_context_for_root
-from flax.ssl.create_ssl import get_mozilla_ca_crt
-from flax.util.bech32m import encode_puzzle_hash
-from flax.util.byte_types import hexstr_to_bytes
-from flax.util.config import load_config
-from flax.util.default_root import DEFAULT_ROOT_PATH
-from flax.util.ints import uint16, uint32
-from flax.wallet.transaction_record import TransactionRecord
-from flax.wallet.util.wallet_types import WalletType
+from sweety.cmds.wallet_funcs import print_balance, wallet_coin_unit
+from sweety.pools.pool_wallet_info import PoolWalletInfo, PoolSingletonState
+from sweety.protocols.pool_protocol import POOL_PROTOCOL_VERSION
+from sweety.rpc.farmer_rpc_client import FarmerRpcClient
+from sweety.rpc.wallet_rpc_client import WalletRpcClient
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.server.server import ssl_context_for_root
+from sweety.ssl.create_ssl import get_mozilla_ca_crt
+from sweety.util.bech32m import encode_puzzle_hash
+from sweety.util.byte_types import hexstr_to_bytes
+from sweety.util.config import load_config
+from sweety.util.default_root import DEFAULT_ROOT_PATH
+from sweety.util.ints import uint16, uint32
+from sweety.wallet.transaction_record import TransactionRecord
+from sweety.wallet.util.wallet_types import WalletType
 
 
 async def create_pool_args(pool_url: str) -> Dict:
@@ -94,7 +94,7 @@ async def create(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -
                 tx = await wallet_client.get_transaction(str(1), tx_record.name)
                 if len(tx.sent_to) > 0:
                     print(f"Transaction submitted to nodes: {tx.sent_to}")
-                    print(f"Do flax wallet get_transaction -f {fingerprint} -tx 0x{tx_record.name} to get status")
+                    print(f"Do sweety wallet get_transaction -f {fingerprint} -tx 0x{tx_record.name} to get status")
                     return None
         except Exception as e:
             print(f"Error creating plot NFT: {e}")
@@ -182,7 +182,7 @@ async def show(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -> 
         if isinstance(e, aiohttp.ClientConnectorError):
             print(
                 f"Connection error. Check if farmer is running at {farmer_rpc_port}."
-                f" You can run the farmer by:\n    flax start farmer-only"
+                f" You can run the farmer by:\n    sweety start farmer-only"
             )
         else:
             print(f"Exception from 'wallet' {e}")
@@ -246,7 +246,7 @@ async def get_login_link(launcher_id_str: str) -> None:
         if isinstance(e, aiohttp.ClientConnectorError):
             print(
                 f"Connection error. Check if farmer is running at {farmer_rpc_port}."
-                f" You can run the farmer by:\n    flax start farmer-only"
+                f" You can run the farmer by:\n    sweety start farmer-only"
             )
         else:
             print(f"Exception from 'farmer' {e}")
@@ -273,7 +273,7 @@ async def submit_tx_with_confirmation(
                 tx = await wallet_client.get_transaction(str(1), tx_record.name)
                 if len(tx.sent_to) > 0:
                     print(f"Transaction submitted to nodes: {tx.sent_to}")
-                    print(f"Do flax wallet get_transaction -f {fingerprint} -tx 0x{tx_record.name} to get status")
+                    print(f"Do sweety wallet get_transaction -f {fingerprint} -tx 0x{tx_record.name} to get status")
                     return None
         except Exception as e:
             print(f"Error performing operation on Plot NFT -f {fingerprint} wallet id: {wallet_id}: {e}")

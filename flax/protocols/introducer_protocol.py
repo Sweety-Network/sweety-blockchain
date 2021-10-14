@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import List
 
-from flax.types.peer_info import TimestampedPeerInfo
-from flax.util.streamable import Streamable, streamable
+from sweety.types.peer_info import TimestampedPeerInfo
+from sweety.util.streamable import Streamable, streamable
 
 """
 Protocol to introducer

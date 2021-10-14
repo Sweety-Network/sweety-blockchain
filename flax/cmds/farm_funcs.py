@@ -2,17 +2,17 @@ from typing import Any, Dict, List, Optional
 
 import aiohttp
 
-from flax.cmds.units import units
-from flax.consensus.block_record import BlockRecord
-from flax.rpc.farmer_rpc_client import FarmerRpcClient
-from flax.rpc.full_node_rpc_client import FullNodeRpcClient
-from flax.rpc.wallet_rpc_client import WalletRpcClient
-from flax.util.config import load_config
-from flax.util.default_root import DEFAULT_ROOT_PATH
-from flax.util.ints import uint16
-from flax.util.misc import format_bytes
-from flax.util.misc import format_minutes
-from flax.util.network import is_localhost
+from sweety.cmds.units import units
+from sweety.consensus.block_record import BlockRecord
+from sweety.rpc.farmer_rpc_client import FarmerRpcClient
+from sweety.rpc.full_node_rpc_client import FullNodeRpcClient
+from sweety.rpc.wallet_rpc_client import WalletRpcClient
+from sweety.util.config import load_config
+from sweety.util.default_root import DEFAULT_ROOT_PATH
+from sweety.util.ints import uint16
+from sweety.util.misc import format_bytes
+from sweety.util.misc import format_minutes
+from sweety.util.network import is_localhost
 
 SECONDS_PER_BLOCK = (24 * 3600) / 4608
 
@@ -212,9 +212,9 @@ async def summary(
         print("Farming")
 
     if amounts is not None:
-        print(f"Total flax farmed: {amounts['farmed_amount'] / units['flax']}")
-        print(f"User transaction fees: {amounts['fee_amount'] / units['flax']}")
-        print(f"Block rewards: {(amounts['farmer_reward_amount'] + amounts['pool_reward_amount']) / units['flax']}")
+        print(f"Total sweety farmed: {amounts['farmed_amount'] / units['sweety']}")
+        print(f"User transaction fees: {amounts['fee_amount'] / units['sweety']}")
+        print(f"Block rewards: {(amounts['farmer_reward_amount'] + amounts['pool_reward_amount']) / units['sweety']}")
         print(f"Last height farmed: {amounts['last_height_farmed']}")
 
     class PlotStats:
@@ -273,8 +273,8 @@ async def summary(
 
     if amounts is None:
         if wallet_not_running:
-            print("For details on farmed rewards and fees you should run 'flax start wallet' and 'flax wallet show'")
+            print("For details on farmed rewards and fees you should run 'sweety start wallet' and 'sweety wallet show'")
         elif wallet_not_ready:
-            print("For details on farmed rewards and fees you should run 'flax wallet show'")
+            print("For details on farmed rewards and fees you should run 'sweety wallet show'")
     else:
-        print("Note: log into your key using 'flax wallet show' to see rewards for each key")
+        print("Note: log into your key using 'sweety wallet show' to see rewards for each key")

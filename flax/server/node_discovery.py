@@ -9,18 +9,18 @@ from typing import Dict, Optional, List, Set
 
 import aiosqlite
 
-import flax.server.ws_connection as ws
+import sweety.server.ws_connection as ws
 import dns.asyncresolver
-from flax.protocols import full_node_protocol, introducer_protocol
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.server.address_manager import AddressManager, ExtendedPeerInfo
-from flax.server.address_manager_store import AddressManagerStore
-from flax.server.outbound_message import NodeType, make_msg
-from flax.server.server import FlaxServer
-from flax.types.peer_info import PeerInfo, TimestampedPeerInfo
-from flax.util.hash import std_hash
-from flax.util.ints import uint64
-from flax.util.path import mkdir, path_from_root
+from sweety.protocols import full_node_protocol, introducer_protocol
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.server.address_manager import AddressManager, ExtendedPeerInfo
+from sweety.server.address_manager_store import AddressManagerStore
+from sweety.server.outbound_message import NodeType, make_msg
+from sweety.server.server import SweetyServer
+from sweety.types.peer_info import PeerInfo, TimestampedPeerInfo
+from sweety.util.hash import std_hash
+from sweety.util.ints import uint64
+from sweety.util.path import mkdir, path_from_root
 
 MAX_PEERS_RECEIVED_PER_REQUEST = 1000
 MAX_TOTAL_PEERS_RECEIVED = 3000
@@ -37,7 +37,7 @@ class FullNodeDiscovery:
 
     def __init__(
         self,
-        server: FlaxServer,
+        server: SweetyServer,
         root_path: Path,
         target_outbound_count: int,
         peer_db_path: str,
@@ -48,7 +48,7 @@ class FullNodeDiscovery:
         default_port: Optional[int],
         log,
     ):
-        self.server: FlaxServer = server
+        self.server: SweetyServer = server
         self.message_queue: asyncio.Queue = asyncio.Queue()
         self.is_closed = False
         self.target_outbound_count = target_outbound_count
@@ -129,7 +129,7 @@ class FullNodeDiscovery:
     def add_message(self, message, data):
         self.message_queue.put_nowait((message, data))
 
-    async def on_connect(self, peer: ws.WSFlaxConnection):
+    async def on_connect(self, peer: ws.WSSweetyConnection):
         if (
             peer.is_outbound is False
             and peer.peer_server_port is not None
@@ -156,7 +156,7 @@ class FullNodeDiscovery:
             await peer.send_message(msg)
 
     # Updates timestamps each time we receive a message for outbound connections.
-    async def update_peer_timestamp_on_message(self, peer: ws.WSFlaxConnection):
+    async def update_peer_timestamp_on_message(self, peer: ws.WSSweetyConnection):
         if (
             peer.is_outbound
             and peer.peer_server_port is not None
@@ -194,7 +194,7 @@ class FullNodeDiscovery:
         if self.introducer_info is None:
             return None
 
-        async def on_connect(peer: ws.WSFlaxConnection):
+        async def on_connect(peer: ws.WSSweetyConnection):
             msg = make_msg(ProtocolMessageTypes.request_peers_introducer, introducer_protocol.RequestPeersIntroducer())
             await peer.send_message(msg)
 

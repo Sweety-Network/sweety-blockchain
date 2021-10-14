@@ -6,35 +6,35 @@ from typing import Callable, Dict, List, Optional, Tuple
 
 from blspy import PrivateKey, G1Element
 
-from flax.consensus.block_rewards import calculate_base_farmer_reward
-from flax.pools.pool_wallet import PoolWallet
-from flax.pools.pool_wallet_info import create_pool_state, FARMING_TO_POOL, PoolWalletInfo, PoolState
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.server.outbound_message import NodeType, make_msg
-from flax.simulator.simulator_protocol import FarmNewBlockProtocol
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.bech32m import decode_puzzle_hash, encode_puzzle_hash
-from flax.util.byte_types import hexstr_to_bytes
-from flax.util.ints import uint32, uint64
-from flax.util.keychain import KeyringIsLocked, bytes_to_mnemonic, generate_mnemonic
-from flax.util.path import path_from_root
-from flax.util.ws_message import WsRpcMessage, create_payload_dict
-from flax.wallet.cc_wallet.cc_wallet import CCWallet
-from flax.wallet.derive_keys import master_sk_to_singleton_owner_sk
-from flax.wallet.rl_wallet.rl_wallet import RLWallet
-from flax.wallet.derive_keys import master_sk_to_farmer_sk, master_sk_to_pool_sk, master_sk_to_wallet_sk
-from flax.wallet.did_wallet.did_wallet import DIDWallet
-from flax.wallet.trade_record import TradeRecord
-from flax.wallet.transaction_record import TransactionRecord
-from flax.wallet.util.backup_utils import download_backup, get_backup_info, upload_backup
-from flax.wallet.util.trade_utils import trade_record_to_dict
-from flax.wallet.util.transaction_type import TransactionType
-from flax.wallet.util.wallet_types import WalletType
-from flax.wallet.wallet_info import WalletInfo
-from flax.wallet.wallet_node import WalletNode
-from flax.util.config import load_config
-from flax.consensus.coinbase import create_puzzlehash_for_pk
+from sweety.consensus.block_rewards import calculate_base_farmer_reward
+from sweety.pools.pool_wallet import PoolWallet
+from sweety.pools.pool_wallet_info import create_pool_state, FARMING_TO_POOL, PoolWalletInfo, PoolState
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.server.outbound_message import NodeType, make_msg
+from sweety.simulator.simulator_protocol import FarmNewBlockProtocol
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.bech32m import decode_puzzle_hash, encode_puzzle_hash
+from sweety.util.byte_types import hexstr_to_bytes
+from sweety.util.ints import uint32, uint64
+from sweety.util.keychain import KeyringIsLocked, bytes_to_mnemonic, generate_mnemonic
+from sweety.util.path import path_from_root
+from sweety.util.ws_message import WsRpcMessage, create_payload_dict
+from sweety.wallet.cc_wallet.cc_wallet import CCWallet
+from sweety.wallet.derive_keys import master_sk_to_singleton_owner_sk
+from sweety.wallet.rl_wallet.rl_wallet import RLWallet
+from sweety.wallet.derive_keys import master_sk_to_farmer_sk, master_sk_to_pool_sk, master_sk_to_wallet_sk
+from sweety.wallet.did_wallet.did_wallet import DIDWallet
+from sweety.wallet.trade_record import TradeRecord
+from sweety.wallet.transaction_record import TransactionRecord
+from sweety.wallet.util.backup_utils import download_backup, get_backup_info, upload_backup
+from sweety.wallet.util.trade_utils import trade_record_to_dict
+from sweety.wallet.util.transaction_type import TransactionType
+from sweety.wallet.util.wallet_types import WalletType
+from sweety.wallet.wallet_info import WalletInfo
+from sweety.wallet.wallet_node import WalletNode
+from sweety.util.config import load_config
+from sweety.consensus.coinbase import create_puzzlehash_for_pk
 
 # Timeout for response from wallet/full node for sending a transaction
 TIMEOUT = 30
@@ -46,7 +46,7 @@ class WalletRpcApi:
     def __init__(self, wallet_node: WalletNode):
         assert wallet_node is not None
         self.service = wallet_node
-        self.service_name = "flax_wallet"
+        self.service_name = "sweety_wallet"
 
     def get_routes(self) -> Dict[str, Callable]:
         return {
@@ -128,7 +128,7 @@ class WalletRpcApi:
             data["wallet_id"] = args[1]
         if args[2] is not None:
             data["additional_data"] = args[2]
-        return [create_payload_dict("state_changed", data, "flax_wallet", "wallet_ui")]
+        return [create_payload_dict("state_changed", data, "sweety_wallet", "wallet_ui")]
 
     async def _stop_wallet(self):
         """
@@ -308,8 +308,8 @@ class WalletRpcApi:
             return False, False
 
         config: Dict = load_config(new_root, "config.yaml")
-        farmer_target = config["farmer"].get("xfx_target_address")
-        pool_target = config["pool"].get("xfx_target_address")
+        farmer_target = config["farmer"].get("sty_target_address")
+        pool_target = config["pool"].get("sty_target_address")
         found_farmer = False
         found_pool = False
         selected = config["selected_network"]
@@ -563,7 +563,7 @@ class WalletRpcApi:
             if request["mode"] == "new":
                 owner_puzzle_hash: bytes32 = await self.service.wallet_state_manager.main_wallet.get_puzzle_hash(True)
 
-                from flax.pools.pool_wallet_info import initial_pool_state_from_dict
+                from sweety.pools.pool_wallet_info import initial_pool_state_from_dict
 
                 async with self.service.wallet_state_manager.lock:
                     last_wallet: Optional[

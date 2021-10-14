@@ -1,27 +1,27 @@
 from typing import Any, Callable, Dict, List, Optional
 
-from flax.consensus.block_record import BlockRecord
-from flax.consensus.pos_quality import UI_ACTUAL_SPACE_CONSTANT_FACTOR
-from flax.full_node.full_node import FullNode
-from flax.full_node.mempool_check_conditions import get_puzzle_and_solution_for_coin
-from flax.types.blockchain_format.program import Program, SerializedProgram
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.coin_record import CoinRecord
-from flax.types.coin_spend import CoinSpend
-from flax.types.full_block import FullBlock
-from flax.types.generator_types import BlockGenerator
-from flax.types.mempool_inclusion_status import MempoolInclusionStatus
-from flax.types.spend_bundle import SpendBundle
-from flax.types.unfinished_header_block import UnfinishedHeaderBlock
-from flax.util.byte_types import hexstr_to_bytes
-from flax.util.ints import uint32, uint64, uint128
-from flax.util.ws_message import WsRpcMessage, create_payload_dict
+from sweety.consensus.block_record import BlockRecord
+from sweety.consensus.pos_quality import UI_ACTUAL_SPACE_CONSTANT_FACTOR
+from sweety.full_node.full_node import FullNode
+from sweety.full_node.mempool_check_conditions import get_puzzle_and_solution_for_coin
+from sweety.types.blockchain_format.program import Program, SerializedProgram
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.coin_record import CoinRecord
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.full_block import FullBlock
+from sweety.types.generator_types import BlockGenerator
+from sweety.types.mempool_inclusion_status import MempoolInclusionStatus
+from sweety.types.spend_bundle import SpendBundle
+from sweety.types.unfinished_header_block import UnfinishedHeaderBlock
+from sweety.util.byte_types import hexstr_to_bytes
+from sweety.util.ints import uint32, uint64, uint128
+from sweety.util.ws_message import WsRpcMessage, create_payload_dict
 
 
 class FullNodeRpcApi:
     def __init__(self, service: FullNode):
         self.service = service
-        self.service_name = "flax_full_node"
+        self.service_name = "sweety_full_node"
         self.cached_blockchain_state: Optional[Dict] = None
 
     def get_routes(self) -> Dict[str, Callable]:

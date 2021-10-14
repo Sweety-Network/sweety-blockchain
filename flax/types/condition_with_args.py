@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import List
 
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.util.streamable import Streamable, streamable
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

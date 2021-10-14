@@ -6,14 +6,14 @@ from typing import List
 import aiosqlite
 import pytest
 
-from flax.consensus.blockchain import Blockchain
-from flax.consensus.constants import ConsensusConstants
-from flax.full_node.block_store import BlockStore
-from flax.full_node.coin_store import CoinStore
-from flax.full_node.hint_store import HintStore
-from flax.types.full_block import FullBlock
-from flax.util.db_wrapper import DBWrapper
-from flax.util.path import mkdir
+from sweety.consensus.blockchain import Blockchain
+from sweety.consensus.constants import ConsensusConstants
+from sweety.full_node.block_store import BlockStore
+from sweety.full_node.coin_store import CoinStore
+from sweety.full_node.hint_store import HintStore
+from sweety.types.full_block import FullBlock
+from sweety.util.db_wrapper import DBWrapper
+from sweety.util.path import mkdir
 from tests.setup_nodes import bt, test_constants
 
 
@@ -103,8 +103,8 @@ def persistent_blocks(
 ):
     # try loading from disc, if not create new blocks.db file
     # TODO hash fixtures.py and blocktool.py, add to path, delete if the files changed
-    block_path_dir = Path("~/.flax/blocks").expanduser()
-    file_path = Path(f"~/.flax/blocks/{db_name}").expanduser()
+    block_path_dir = Path("~/.sweety/blocks").expanduser()
+    file_path = Path(f"~/.sweety/blocks/{db_name}").expanduser()
     if not path.exists(block_path_dir):
         mkdir(block_path_dir.parent)
         mkdir(block_path_dir)

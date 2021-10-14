@@ -6,9 +6,9 @@ from random import choice, randrange
 from secrets import randbits
 from typing import Dict, List, Optional, Set, Tuple
 
-from flax.types.peer_info import PeerInfo, TimestampedPeerInfo
-from flax.util.hash import std_hash
-from flax.util.ints import uint16, uint64
+from sweety.types.peer_info import PeerInfo, TimestampedPeerInfo
+from sweety.util.hash import std_hash
+from sweety.util.ints import uint16, uint64
 
 TRIED_BUCKETS_PER_GROUP = 8
 NEW_BUCKETS_PER_SOURCE_GROUP = 64

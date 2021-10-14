@@ -5,16 +5,16 @@ from typing import List, Tuple
 from blspy import G2Element
 from clvm_tools import binutils
 
-from flax.types.blockchain_format.program import Program, INFINITE_COST
-from flax.types.announcement import Announcement
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.coin_spend import CoinSpend
-from flax.types.spend_bundle import SpendBundle
-from flax.util.condition_tools import ConditionOpcode
+from sweety.types.blockchain_format.program import Program, INFINITE_COST
+from sweety.types.announcement import Announcement
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.condition_tools import ConditionOpcode
 
-from flax.util.ints import uint64
-from flax.wallet.puzzles.load_clvm import load_clvm
+from sweety.util.ints import uint64
+from sweety.wallet.puzzles.load_clvm import load_clvm
 
 from tests.core.full_node.test_conditions import bt, check_spend_bundle_validity, initial_blocks
 

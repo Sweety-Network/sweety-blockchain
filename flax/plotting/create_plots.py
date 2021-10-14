@@ -7,16 +7,16 @@ from typing import List, Optional, Tuple
 from blspy import AugSchemeMPL, G1Element, PrivateKey
 from chiapos import DiskPlotter
 
-from flax.daemon.keychain_proxy import KeychainProxy, connect_to_keychain_and_validate, wrap_local_keychain
-from flax.plotting.util import add_plot_directory
-from flax.plotting.util import stream_plot_info_ph, stream_plot_info_pk
-from flax.types.blockchain_format.proof_of_space import ProofOfSpace
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.bech32m import decode_puzzle_hash
-from flax.util.config import config_path_for_filename, load_config
-from flax.util.keychain import Keychain
-from flax.util.path import mkdir
-from flax.wallet.derive_keys import master_sk_to_farmer_sk, master_sk_to_local_sk, master_sk_to_pool_sk
+from sweety.daemon.keychain_proxy import KeychainProxy, connect_to_keychain_and_validate, wrap_local_keychain
+from sweety.plotting.util import add_plot_directory
+from sweety.plotting.util import stream_plot_info_ph, stream_plot_info_pk
+from sweety.types.blockchain_format.proof_of_space import ProofOfSpace
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.bech32m import decode_puzzle_hash
+from sweety.util.config import config_path_for_filename, load_config
+from sweety.util.keychain import Keychain
+from sweety.util.path import mkdir
+from sweety.wallet.derive_keys import master_sk_to_farmer_sk, master_sk_to_local_sk, master_sk_to_pool_sk
 
 log = logging.getLogger(__name__)
 
@@ -114,7 +114,7 @@ class PlotKeysResolver:
         sk: Optional[PrivateKey] = await self.get_sk(keychain_proxy)
         if sk is None:
             raise RuntimeError(
-                "No keys, please run 'flax keys add', 'flax keys generate' or provide a public key with -f"
+                "No keys, please run 'sweety keys add', 'sweety keys generate' or provide a public key with -f"
             )
         return master_sk_to_farmer_sk(sk).get_g1()
 
@@ -122,7 +122,7 @@ class PlotKeysResolver:
         sk: Optional[PrivateKey] = await self.get_sk(keychain_proxy)
         if sk is None:
             raise RuntimeError(
-                "No keys, please run 'flax keys add', 'flax keys generate' or provide a public key with -p"
+                "No keys, please run 'sweety keys add', 'sweety keys generate' or provide a public key with -p"
             )
         return master_sk_to_pool_sk(sk).get_g1()
 

@@ -6,28 +6,28 @@ from typing import Dict, Optional, List, Any, Set, Tuple, Union
 
 from blspy import AugSchemeMPL, G1Element
 from secrets import token_bytes
-from flax.protocols import wallet_protocol
-from flax.protocols.wallet_protocol import RespondAdditions, RejectAdditionsRequest
-from flax.server.outbound_message import NodeType
-from flax.types.announcement import Announcement
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.program import Program
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.coin_spend import CoinSpend
-from flax.types.spend_bundle import SpendBundle
-from flax.util.ints import uint64, uint32, uint8
-from flax.wallet.util.transaction_type import TransactionType
+from sweety.protocols import wallet_protocol
+from sweety.protocols.wallet_protocol import RespondAdditions, RejectAdditionsRequest
+from sweety.server.outbound_message import NodeType
+from sweety.types.announcement import Announcement
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.program import Program
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.ints import uint64, uint32, uint8
+from sweety.wallet.util.transaction_type import TransactionType
 
-from flax.wallet.did_wallet.did_info import DIDInfo
-from flax.wallet.lineage_proof import LineageProof
-from flax.wallet.transaction_record import TransactionRecord
-from flax.wallet.util.wallet_types import WalletType
-from flax.wallet.wallet import Wallet
-from flax.wallet.wallet_coin_record import WalletCoinRecord
-from flax.wallet.wallet_info import WalletInfo
-from flax.wallet.derivation_record import DerivationRecord
-from flax.wallet.did_wallet import did_wallet_puzzles
-from flax.wallet.derive_keys import master_sk_to_wallet_sk
+from sweety.wallet.did_wallet.did_info import DIDInfo
+from sweety.wallet.lineage_proof import LineageProof
+from sweety.wallet.transaction_record import TransactionRecord
+from sweety.wallet.util.wallet_types import WalletType
+from sweety.wallet.wallet import Wallet
+from sweety.wallet.wallet_coin_record import WalletCoinRecord
+from sweety.wallet.wallet_info import WalletInfo
+from sweety.wallet.derivation_record import DerivationRecord
+from sweety.wallet.did_wallet import did_wallet_puzzles
+from sweety.wallet.derive_keys import master_sk_to_wallet_sk
 
 
 class DIDWallet:

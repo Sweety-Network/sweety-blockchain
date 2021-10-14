@@ -5,8 +5,8 @@ import unicodedata
 
 from bitstring import BitArray  # pyright: reportMissingImports=false
 from blspy import AugSchemeMPL, G1Element, PrivateKey  # pyright: reportMissingImports=false
-from flax.util.hash import std_hash
-from flax.util.keyring_wrapper import KeyringWrapper
+from sweety.util.hash import std_hash
+from sweety.util.keyring_wrapper import KeyringWrapper
 from getpass import getpass
 from hashlib import pbkdf2_hmac
 from pathlib import Path
@@ -16,8 +16,8 @@ from typing import Any, Dict, List, Optional, Tuple
 
 
 CURRENT_KEY_VERSION = "1.8"
-DEFAULT_USER = f"user-flax-{CURRENT_KEY_VERSION}"  # e.g. user-flax-1.8
-DEFAULT_SERVICE = f"flax-{DEFAULT_USER}"  # e.g. flax-user-flax-1.8
+DEFAULT_USER = f"user-sweety-{CURRENT_KEY_VERSION}"  # e.g. user-sweety-1.8
+DEFAULT_SERVICE = f"sweety-{DEFAULT_USER}"  # e.g. sweety-user-sweety-1.8
 DEFAULT_PASSPHRASE_PROMPT = (
     colorama.Fore.YELLOW + colorama.Style.BRIGHT + "(Unlock Keyring)" + colorama.Style.RESET_ALL + " Passphrase: "
 )  # noqa: E501

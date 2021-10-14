@@ -1,21 +1,21 @@
 from io import TextIOWrapper
 import click
 
-from flax import __version__
-from flax.cmds.configure import configure_cmd
-from flax.cmds.farm import farm_cmd
-from flax.cmds.init import init_cmd
-from flax.cmds.keys import keys_cmd
-from flax.cmds.netspace import netspace_cmd
-from flax.cmds.passphrase import passphrase_cmd
-from flax.cmds.plots import plots_cmd
-from flax.cmds.show import show_cmd
-from flax.cmds.start import start_cmd
-from flax.cmds.stop import stop_cmd
-from flax.cmds.wallet import wallet_cmd
-from flax.util.default_root import DEFAULT_KEYS_ROOT_PATH, DEFAULT_ROOT_PATH
-from flax.util.keychain import set_keys_root_path, supports_keyring_passphrase
-from flax.util.ssl import check_ssl
+from sweety import __version__
+from sweety.cmds.configure import configure_cmd
+from sweety.cmds.farm import farm_cmd
+from sweety.cmds.init import init_cmd
+from sweety.cmds.keys import keys_cmd
+from sweety.cmds.netspace import netspace_cmd
+from sweety.cmds.passphrase import passphrase_cmd
+from sweety.cmds.plots import plots_cmd
+from sweety.cmds.show import show_cmd
+from sweety.cmds.start import start_cmd
+from sweety.cmds.stop import stop_cmd
+from sweety.cmds.wallet import wallet_cmd
+from sweety.util.default_root import DEFAULT_KEYS_ROOT_PATH, DEFAULT_ROOT_PATH
+from sweety.util.keychain import set_keys_root_path, supports_keyring_passphrase
+from sweety.util.ssl import check_ssl
 from typing import Optional
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -38,8 +38,8 @@ def monkey_patch_click() -> None:
 
 
 @click.group(
-    help=f"\n  Manage flax blockchain infrastructure ({__version__})\n",
-    epilog="Try 'flax start node', 'flax netspace -d 192', or 'flax show -s'",
+    help=f"\n  Manage sweety blockchain infrastructure ({__version__})\n",
+    epilog="Try 'sweety start node', 'sweety netspace -d 192', or 'sweety show -s'",
     context_settings=CONTEXT_SETTINGS,
 )
 @click.option("--root-path", default=DEFAULT_ROOT_PATH, help="Config file root", type=click.Path(), show_default=True)
@@ -76,30 +76,30 @@ def cli(
 
 
 if not supports_keyring_passphrase():
-    from flax.cmds.passphrase_funcs import remove_passphrase_options_from_cmd
+    from sweety.cmds.passphrase_funcs import remove_passphrase_options_from_cmd
 
     # TODO: Remove once keyring passphrase management is rolled out to all platforms
     remove_passphrase_options_from_cmd(cli)
 
 
-@cli.command("version", short_help="Show flax version")
+@cli.command("version", short_help="Show sweety version")
 def version_cmd() -> None:
     print(__version__)
 
 
-@cli.command("run_daemon", short_help="Runs flax daemon")
+@cli.command("run_daemon", short_help="Runs sweety daemon")
 @click.option(
     "--wait-for-unlock",
     help="If the keyring is passphrase-protected, the daemon will wait for an unlock command before accessing keys",
     default=False,
     is_flag=True,
-    hidden=True,  # --wait-for-unlock is only set when launched by flax start <service>
+    hidden=True,  # --wait-for-unlock is only set when launched by sweety start <service>
 )
 @click.pass_context
 def run_daemon_cmd(ctx: click.Context, wait_for_unlock: bool) -> None:
     import asyncio
-    from flax.daemon.server import async_run_daemon
-    from flax.util.keychain import Keychain
+    from sweety.daemon.server import async_run_daemon
+    from sweety.util.keychain import Keychain
 
     wait_for_unlock = wait_for_unlock and Keychain.is_keyring_locked()
 

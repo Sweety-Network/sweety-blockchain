@@ -9,28 +9,28 @@ from typing import Callable, Dict, List, Optional, Tuple, Set
 
 from chiavdf import create_discriminant
 
-from flax.consensus.constants import ConsensusConstants
-from flax.consensus.pot_iterations import calculate_sp_iters, is_overflow_block
-from flax.protocols import timelord_protocol
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.server.outbound_message import NodeType, make_msg
-from flax.server.server import FlaxServer
-from flax.timelord.iters_from_block import iters_from_block
-from flax.timelord.timelord_state import LastState
-from flax.timelord.types import Chain, IterationType, StateType
-from flax.types.blockchain_format.classgroup import ClassgroupElement
-from flax.types.blockchain_format.reward_chain_block import RewardChainBlock
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.slots import (
+from sweety.consensus.constants import ConsensusConstants
+from sweety.consensus.pot_iterations import calculate_sp_iters, is_overflow_block
+from sweety.protocols import timelord_protocol
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.server.outbound_message import NodeType, make_msg
+from sweety.server.server import SweetyServer
+from sweety.timelord.iters_from_block import iters_from_block
+from sweety.timelord.timelord_state import LastState
+from sweety.timelord.types import Chain, IterationType, StateType
+from sweety.types.blockchain_format.classgroup import ClassgroupElement
+from sweety.types.blockchain_format.reward_chain_block import RewardChainBlock
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.slots import (
     ChallengeChainSubSlot,
     InfusedChallengeChainSubSlot,
     RewardChainSubSlot,
     SubSlotProofs,
 )
-from flax.types.blockchain_format.sub_epoch_summary import SubEpochSummary
-from flax.types.blockchain_format.vdf import VDFInfo, VDFProof
-from flax.types.end_of_slot_bundle import EndOfSubSlotBundle
-from flax.util.ints import uint8, uint32, uint64, uint128
+from sweety.types.blockchain_format.sub_epoch_summary import SubEpochSummary
+from sweety.types.blockchain_format.vdf import VDFInfo, VDFProof
+from sweety.types.end_of_slot_bundle import EndOfSubSlotBundle
+from sweety.util.ints import uint8, uint32, uint64, uint128
 
 log = logging.getLogger(__name__)
 
@@ -44,7 +44,7 @@ class Timelord:
         self.free_clients: List[Tuple[str, asyncio.StreamReader, asyncio.StreamWriter]] = []
         self.potential_free_clients: List = []
         self.ip_whitelist = self.config["vdf_clients"]["ip"]
-        self.server: Optional[FlaxServer] = None
+        self.server: Optional[SweetyServer] = None
         self.chain_type_to_stream: Dict[Chain, Tuple[str, asyncio.StreamReader, asyncio.StreamWriter]] = {}
         self.chain_start_time: Dict = {}
         # Chains that currently don't have a vdf_client.
@@ -116,7 +116,7 @@ class Timelord:
     async def _await_closed(self):
         pass
 
-    def set_server(self, server: FlaxServer):
+    def set_server(self, server: SweetyServer):
         self.server = server
 
     async def _handle_client(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter):

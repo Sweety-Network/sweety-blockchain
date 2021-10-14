@@ -3,19 +3,19 @@ import time
 from typing import Dict, List, Optional
 from clvm_rs import STRICT_MODE
 
-from flax.consensus.cost_calculator import NPCResult
-from flax.full_node.generator import create_generator_args, setup_generator_args
-from flax.types.blockchain_format.program import NIL
-from flax.types.coin_record import CoinRecord
-from flax.types.condition_with_args import ConditionWithArgs
-from flax.types.generator_types import BlockGenerator
-from flax.types.name_puzzle_condition import NPC
-from flax.util.clvm import int_from_bytes
-from flax.util.condition_tools import ConditionOpcode
-from flax.util.errors import Err
-from flax.util.ints import uint32, uint64, uint16
-from flax.wallet.puzzles.generator_loader import GENERATOR_FOR_SINGLE_COIN_MOD
-from flax.wallet.puzzles.rom_bootstrap_generator import get_generator
+from sweety.consensus.cost_calculator import NPCResult
+from sweety.full_node.generator import create_generator_args, setup_generator_args
+from sweety.types.blockchain_format.program import NIL
+from sweety.types.coin_record import CoinRecord
+from sweety.types.condition_with_args import ConditionWithArgs
+from sweety.types.generator_types import BlockGenerator
+from sweety.types.name_puzzle_condition import NPC
+from sweety.util.clvm import int_from_bytes
+from sweety.util.condition_tools import ConditionOpcode
+from sweety.util.errors import Err
+from sweety.util.ints import uint32, uint64, uint16
+from sweety.wallet.puzzles.generator_loader import GENERATOR_FOR_SINGLE_COIN_MOD
+from sweety.wallet.puzzles.rom_bootstrap_generator import get_generator
 
 GENERATOR_MOD = get_generator()
 

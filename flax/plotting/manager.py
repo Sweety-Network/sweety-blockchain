@@ -10,8 +10,8 @@ from concurrent.futures.thread import ThreadPoolExecutor
 from blspy import G1Element
 from chiapos import DiskProver
 
-from flax.consensus.pos_quality import UI_ACTUAL_SPACE_CONSTANT_FACTOR, _expected_plot_size
-from flax.plotting.util import (
+from sweety.consensus.pos_quality import UI_ACTUAL_SPACE_CONSTANT_FACTOR, _expected_plot_size
+from sweety.plotting.util import (
     PlotInfo,
     PlotRefreshResult,
     PlotsRefreshParameter,
@@ -20,12 +20,12 @@ from flax.plotting.util import (
     stream_plot_info_pk,
     stream_plot_info_ph,
 )
-from flax.util.ints import uint16
-from flax.util.path import mkdir
-from flax.util.streamable import Streamable, streamable
-from flax.types.blockchain_format.proof_of_space import ProofOfSpace
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.wallet.derive_keys import master_sk_to_local_sk
+from sweety.util.ints import uint16
+from sweety.util.path import mkdir
+from sweety.util.streamable import Streamable, streamable
+from sweety.types.blockchain_format.proof_of_space import ProofOfSpace
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.wallet.derive_keys import master_sk_to_local_sk
 
 log = logging.getLogger(__name__)
 

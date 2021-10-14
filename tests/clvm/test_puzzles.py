@@ -3,13 +3,13 @@ from unittest import TestCase
 
 from blspy import AugSchemeMPL, BasicSchemeMPL, G1Element, G2Element
 
-from flax.types.blockchain_format.program import Program
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.coin_spend import CoinSpend
-from flax.types.spend_bundle import SpendBundle
-from flax.util.condition_tools import ConditionOpcode
-from flax.util.hash import std_hash
-from flax.wallet.puzzles import (
+from sweety.types.blockchain_format.program import Program
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.condition_tools import ConditionOpcode
+from sweety.util.hash import std_hash
+from sweety.wallet.puzzles import (
     p2_conditions,
     p2_delegated_conditions,
     p2_delegated_puzzle,

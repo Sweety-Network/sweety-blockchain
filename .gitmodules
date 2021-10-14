@@ -1,6 +1,6 @@
 [submodule "mozilla-ca"]
 	path = mozilla-ca
 	url = https://github.com/Chia-Network/mozilla-ca.git
-[submodule "flax-blockchain-gui"]
-	path = flax-blockchain-gui
-	url = https://github.com/Flax-Network/flax-blockchain-gui.git
+[submodule "sweety-blockchain-gui"]
+	path = sweety-blockchain-gui
+	url = https://github.com/Sweety-Network/sweety-blockchain-gui.git

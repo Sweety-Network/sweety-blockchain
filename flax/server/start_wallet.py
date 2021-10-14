@@ -2,19 +2,19 @@ import pathlib
 from multiprocessing import freeze_support
 from typing import Dict, Optional
 
-from flax.consensus.constants import ConsensusConstants
-from flax.consensus.default_constants import DEFAULT_CONSTANTS
-from flax.rpc.wallet_rpc_api import WalletRpcApi
-from flax.server.outbound_message import NodeType
-from flax.server.start_service import run_service
-from flax.types.peer_info import PeerInfo
-from flax.util.config import load_config_cli, load_config
-from flax.util.default_root import DEFAULT_ROOT_PATH
-from flax.util.keychain import Keychain
-from flax.wallet.wallet_node import WalletNode
+from sweety.consensus.constants import ConsensusConstants
+from sweety.consensus.default_constants import DEFAULT_CONSTANTS
+from sweety.rpc.wallet_rpc_api import WalletRpcApi
+from sweety.server.outbound_message import NodeType
+from sweety.server.start_service import run_service
+from sweety.types.peer_info import PeerInfo
+from sweety.util.config import load_config_cli, load_config
+from sweety.util.default_root import DEFAULT_ROOT_PATH
+from sweety.util.keychain import Keychain
+from sweety.wallet.wallet_node import WalletNode
 
 # See: https://bugs.python.org/issue29288
-from flax.wallet.wallet_node_api import WalletNodeAPI
+from sweety.wallet.wallet_node_api import WalletNodeAPI
 
 "".encode("idna")
 

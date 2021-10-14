@@ -5,10 +5,10 @@ import colorama
 import threading
 import yaml
 
-from flax.cmds.passphrase_funcs import read_passphrase_from_file
-from flax.util.default_root import DEFAULT_KEYS_ROOT_PATH
-from flax.util.file_keyring import FileKeyring
-from flax.util.keyring_wrapper import DEFAULT_PASSPHRASE_IF_NO_MASTER_PASSPHRASE
+from sweety.cmds.passphrase_funcs import read_passphrase_from_file
+from sweety.util.default_root import DEFAULT_KEYS_ROOT_PATH
+from sweety.util.file_keyring import FileKeyring
+from sweety.util.keyring_wrapper import DEFAULT_PASSPHRASE_IF_NO_MASTER_PASSPHRASE
 from cryptography.exceptions import InvalidTag
 from getpass import getpass
 from io import TextIOWrapper

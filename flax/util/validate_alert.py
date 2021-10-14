@@ -3,8 +3,8 @@ from pathlib import Path
 
 from blspy import AugSchemeMPL, PublicKeyMPL, SignatureMPL
 
-from flax.util.byte_types import hexstr_to_bytes
-from flax.util.hash import std_hash
+from sweety.util.byte_types import hexstr_to_bytes
+from sweety.util.hash import std_hash
 
 
 def validate_alert_file(file_path: Path, pubkey: str) -> bool:

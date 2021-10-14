@@ -1,7 +1,7 @@
 from typing import List, Callable
 
-from flax.consensus.blockchain_interface import BlockchainInterface
-from flax.util.ints import uint32
+from sweety.consensus.blockchain_interface import BlockchainInterface
+from sweety.util.ints import uint32
 
 
 async def check_fork_next_block(

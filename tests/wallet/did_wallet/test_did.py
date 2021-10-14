@@ -1,14 +1,14 @@
 import asyncio
 import pytest
-from flax.simulator.simulator_protocol import FarmNewBlockProtocol
-from flax.types.peer_info import PeerInfo
-from flax.util.ints import uint16, uint32, uint64
+from sweety.simulator.simulator_protocol import FarmNewBlockProtocol
+from sweety.types.peer_info import PeerInfo
+from sweety.util.ints import uint16, uint32, uint64
 from tests.setup_nodes import setup_simulators_and_wallets
-from flax.wallet.did_wallet.did_wallet import DIDWallet
-from flax.types.blockchain_format.program import Program
+from sweety.wallet.did_wallet.did_wallet import DIDWallet
+from sweety.types.blockchain_format.program import Program
 from blspy import AugSchemeMPL
-from flax.types.spend_bundle import SpendBundle
-from flax.consensus.block_rewards import calculate_pool_reward, calculate_base_farmer_reward
+from sweety.types.spend_bundle import SpendBundle
+from sweety.consensus.block_rewards import calculate_pool_reward, calculate_base_farmer_reward
 from tests.time_out_assert import time_out_assert
 
 

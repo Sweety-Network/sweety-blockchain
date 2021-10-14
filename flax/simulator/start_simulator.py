@@ -3,13 +3,13 @@ from pathlib import Path
 from multiprocessing import freeze_support
 from typing import Dict
 
-from flax.full_node.full_node import FullNode
-from flax.rpc.full_node_rpc_api import FullNodeRpcApi
-from flax.server.outbound_message import NodeType
-from flax.server.start_service import run_service
-from flax.util.config import load_config_cli
-from flax.util.default_root import DEFAULT_ROOT_PATH
-from flax.util.path import mkdir, path_from_root
+from sweety.full_node.full_node import FullNode
+from sweety.rpc.full_node_rpc_api import FullNodeRpcApi
+from sweety.server.outbound_message import NodeType
+from sweety.server.start_service import run_service
+from sweety.util.config import load_config_cli
+from sweety.util.default_root import DEFAULT_ROOT_PATH
+from sweety.util.path import mkdir, path_from_root
 from tests.block_tools import BlockTools, create_block_tools, test_constants
 from tests.util.keyring import TempKeyring
 

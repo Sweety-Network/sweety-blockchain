@@ -1,15 +1,15 @@
 import logging
 from typing import List, Union
 
-from flax.consensus.block_record import BlockRecord
-from flax.consensus.blockchain_interface import BlockchainInterface
-from flax.consensus.constants import ConsensusConstants
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.full_block import FullBlock
-from flax.types.header_block import HeaderBlock
-from flax.types.unfinished_block import UnfinishedBlock
-from flax.types.unfinished_header_block import UnfinishedHeaderBlock
-from flax.util.ints import uint64
+from sweety.consensus.block_record import BlockRecord
+from sweety.consensus.blockchain_interface import BlockchainInterface
+from sweety.consensus.constants import ConsensusConstants
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.full_block import FullBlock
+from sweety.types.header_block import HeaderBlock
+from sweety.types.unfinished_block import UnfinishedBlock
+from sweety.types.unfinished_header_block import UnfinishedHeaderBlock
+from sweety.util.ints import uint64
 
 log = logging.getLogger(__name__)
 

@@ -82,7 +82,7 @@ jobs:
       uses: kitek/decode-base64-into-file-action@1.0
       with:
         encoded-value: ${{ secrets.WIN_CODE_SIGN_CERT }}
-        destination-file: .\flax-blockchain-gui\win_code_sign_cert.p12
+        destination-file: .\sweety-blockchain-gui\win_code_sign_cert.p12
 
     # Create our own venv outside of the git directory JUST for getting the ACTUAL version so that install can't break it
     - name: Get version number
@@ -91,9 +91,9 @@ jobs:
         python -m venv ..\venv
         . ..\venv\Scripts\Activate.ps1
         pip3 install setuptools_scm
-        $env:FLAX_INSTALLER_VERSION = python .\build_scripts\installer-version.py -win
-        echo "$env:FLAX_INSTALLER_VERSION"
-        echo "::set-output name=FLAX_INSTALLER_VERSION::$env:FLAX_INSTALLER_VERSION"
+        $env:SWEETY_INSTALLER_VERSION = python .\build_scripts\installer-version.py -win
+        echo "$env:SWEETY_INSTALLER_VERSION"
+        echo "::set-output name=SWEETY_INSTALLER_VERSION::$env:SWEETY_INSTALLER_VERSION"
         deactivate
 
     - name: Build Windows installer with build_scripts\build_windows.ps1
@@ -109,10 +109,10 @@ jobs:
       uses: actions/upload-artifact@v2.2.2
       with:
         name: Windows-Exe
-        path: ${{ github.workspace }}\flax-blockchain-gui\Flax-win32-x64\
+        path: ${{ github.workspace }}\sweety-blockchain-gui\Sweety-win32-x64\
 
     - name: Upload Installer to artifacts
       uses: actions/upload-artifact@v2.2.2
       with:
         name: Windows-Installers
-        path: ${{ github.workspace }}\flax-blockchain-gui\release-builds\
+        path: ${{ github.workspace }}\sweety-blockchain-gui\release-builds\

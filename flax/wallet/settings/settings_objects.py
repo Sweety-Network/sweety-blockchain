@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from flax.util.streamable import Streamable, streamable
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

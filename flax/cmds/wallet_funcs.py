@@ -7,27 +7,27 @@ from typing import Callable, List, Optional, Tuple, Dict
 
 import aiohttp
 
-from flax.cmds.units import units
-from flax.rpc.wallet_rpc_client import WalletRpcClient
-from flax.server.start_wallet import SERVICE_NAME
-from flax.util.bech32m import encode_puzzle_hash
-from flax.util.byte_types import hexstr_to_bytes
-from flax.util.config import load_config
-from flax.util.default_root import DEFAULT_ROOT_PATH
-from flax.util.ints import uint16, uint64
-from flax.wallet.transaction_record import TransactionRecord
-from flax.wallet.util.wallet_types import WalletType
+from sweety.cmds.units import units
+from sweety.rpc.wallet_rpc_client import WalletRpcClient
+from sweety.server.start_wallet import SERVICE_NAME
+from sweety.util.bech32m import encode_puzzle_hash
+from sweety.util.byte_types import hexstr_to_bytes
+from sweety.util.config import load_config
+from sweety.util.default_root import DEFAULT_ROOT_PATH
+from sweety.util.ints import uint16, uint64
+from sweety.wallet.transaction_record import TransactionRecord
+from sweety.wallet.util.wallet_types import WalletType
 
 
 def print_transaction(tx: TransactionRecord, verbose: bool, name) -> None:
     if verbose:
         print(tx)
     else:
-        flax_amount = Decimal(int(tx.amount)) / units["flax"]
+        sweety_amount = Decimal(int(tx.amount)) / units["sweety"]
         to_address = encode_puzzle_hash(tx.to_puzzle_hash, name)
         print(f"Transaction {tx.name}")
         print(f"Status: {'Confirmed' if tx.confirmed else ('In mempool' if tx.is_in_mempool() else 'Pending')}")
-        print(f"Amount {'sent' if tx.sent else 'received'}: {flax_amount} {name}")
+        print(f"Amount {'sent' if tx.sent else 'received'}: {sweety_amount} {name}")
         print(f"To address: {to_address}")
         print("Created at:", datetime.fromtimestamp(tx.created_at_time).strftime("%Y-%m-%d %H:%M:%S"))
         print("")
@@ -89,8 +89,8 @@ async def send(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -> 
         )
         return
     print("Submitting transaction...")
-    final_amount = uint64(int(amount * units["flax"]))
-    final_fee = uint64(int(fee * units["flax"]))
+    final_amount = uint64(int(amount * units["sweety"]))
+    final_fee = uint64(int(fee * units["sweety"]))
     res = await wallet_client.send_transaction(wallet_id, final_amount, address, final_fee)
     tx_id = res.name
     start = time.time()
@@ -99,11 +99,11 @@ async def send(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -> 
         tx = await wallet_client.get_transaction(wallet_id, tx_id)
         if len(tx.sent_to) > 0:
             print(f"Transaction submitted to nodes: {tx.sent_to}")
-            print(f"Do flax wallet get_transaction -f {fingerprint} -tx 0x{tx_id} to get status")
+            print(f"Do sweety wallet get_transaction -f {fingerprint} -tx 0x{tx_id} to get status")
             return None
 
     print("Transaction not yet submitted to nodes")
-    print(f"Do 'flax wallet get_transaction -f {fingerprint} -tx 0x{tx_id}' to get status")
+    print(f"Do 'sweety wallet get_transaction -f {fingerprint} -tx 0x{tx_id}' to get status")
 
 
 async def get_address(args: dict, wallet_client: WalletRpcClient, fingerprint: int) -> None:
@@ -122,7 +122,7 @@ def wallet_coin_unit(typ: WalletType, address_prefix: str) -> Tuple[str, int]:
     if typ == WalletType.COLOURED_COIN:
         return "", units["colouredcoin"]
     if typ in [WalletType.STANDARD_WALLET, WalletType.POOLING_WALLET, WalletType.MULTI_SIG, WalletType.RATE_LIMITED]:
-        return address_prefix, units["flax"]
+        return address_prefix, units["sweety"]
     return "", units["mojo"]
 
 
@@ -160,7 +160,7 @@ async def get_wallet(wallet_client: WalletRpcClient, fingerprint: int = None) ->
     else:
         fingerprints = await wallet_client.get_public_keys()
     if len(fingerprints) == 0:
-        print("No keys loaded. Run 'flax keys generate' or import a key")
+        print("No keys loaded. Run 'sweety keys generate' or import a key")
         return None
     if len(fingerprints) == 1:
         fingerprint = fingerprints[0]
@@ -248,7 +248,7 @@ async def execute_with_wallet(
         if isinstance(e, aiohttp.ClientConnectorError):
             print(
                 f"Connection error. Check if the wallet is running at {wallet_rpc_port}. "
-                "You can run the wallet via:\n\tflax start wallet"
+                "You can run the wallet via:\n\tsweety start wallet"
             )
         else:
             print(f"Exception from 'wallet' {e}")

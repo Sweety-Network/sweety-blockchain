@@ -8,32 +8,32 @@ from typing import Dict, List, Optional, Set, Tuple
 from blspy import G1Element
 from chiabip158 import PyBIP158
 
-from flax.util import cached_bls
-from flax.consensus.block_record import BlockRecord
-from flax.consensus.constants import ConsensusConstants
-from flax.consensus.cost_calculator import NPCResult, calculate_cost_of_program
-from flax.full_node.bundle_tools import simple_solution_generator
-from flax.full_node.coin_store import CoinStore
-from flax.full_node.mempool import Mempool
-from flax.full_node.mempool_check_conditions import mempool_check_conditions_dict, get_name_puzzle_conditions
-from flax.full_node.pending_tx_cache import PendingTxCache
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.program import SerializedProgram
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.coin_record import CoinRecord
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.condition_with_args import ConditionWithArgs
-from flax.types.mempool_inclusion_status import MempoolInclusionStatus
-from flax.types.mempool_item import MempoolItem
-from flax.types.spend_bundle import SpendBundle
-from flax.util.clvm import int_from_bytes
-from flax.util.condition_tools import (
+from sweety.util import cached_bls
+from sweety.consensus.block_record import BlockRecord
+from sweety.consensus.constants import ConsensusConstants
+from sweety.consensus.cost_calculator import NPCResult, calculate_cost_of_program
+from sweety.full_node.bundle_tools import simple_solution_generator
+from sweety.full_node.coin_store import CoinStore
+from sweety.full_node.mempool import Mempool
+from sweety.full_node.mempool_check_conditions import mempool_check_conditions_dict, get_name_puzzle_conditions
+from sweety.full_node.pending_tx_cache import PendingTxCache
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.program import SerializedProgram
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.coin_record import CoinRecord
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.condition_with_args import ConditionWithArgs
+from sweety.types.mempool_inclusion_status import MempoolInclusionStatus
+from sweety.types.mempool_item import MempoolItem
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.clvm import int_from_bytes
+from sweety.util.condition_tools import (
     pkm_pairs_for_conditions_dict,
 )
-from flax.util.errors import Err
-from flax.util.generator_tools import additions_for_npc
-from flax.util.ints import uint32, uint64
-from flax.util.streamable import recurse_jsonify
+from sweety.util.errors import Err
+from sweety.util.generator_tools import additions_for_npc
+from sweety.util.ints import uint32, uint64
+from sweety.util.streamable import recurse_jsonify
 
 log = logging.getLogger(__name__)
 
@@ -55,7 +55,7 @@ class MempoolManager:
         self.coin_store = coin_store
 
         # The fee per cost must be above this amount to consider the fee "nonzero", and thus able to kick out other
-        # transactions. This prevents spam. This is equivalent to 0.055 XFX per block, or about 0.00005 XFX for two
+        # transactions. This prevents spam. This is equivalent to 0.055 STY per block, or about 0.00005 STY for two
         # spends.
         self.nonzero_fee_minimum_fpc = 5
 
@@ -161,7 +161,7 @@ class MempoolManager:
 
     @staticmethod
     def get_min_fee_increase() -> int:
-        # 0.00001 XFX
+        # 0.00001 STY
         return 10000000
 
     def can_replace(
@@ -392,14 +392,14 @@ class MempoolManager:
                 log.warning(f"{npc.puzzle_hash} != {coin_record.coin.puzzle_hash}")
                 return None, MempoolInclusionStatus.FAILED, Err.WRONG_PUZZLE_HASH
 
-            flaxlisp_height = (
+            sweetylisp_height = (
                 self.peak.prev_transaction_block_height if not self.peak.is_transaction_block else self.peak.height
             )
             assert self.peak.timestamp is not None
             error = mempool_check_conditions_dict(
                 coin_record,
                 npc.condition_dict,
-                uint32(flaxlisp_height),
+                uint32(sweetylisp_height),
                 self.peak.timestamp,
             )
 

@@ -3,9 +3,9 @@ from typing import List, Tuple, Dict, Optional
 
 import aiosqlite
 
-from flax.types.coin_spend import CoinSpend
-from flax.util.db_wrapper import DBWrapper
-from flax.util.ints import uint32
+from sweety.types.coin_spend import CoinSpend
+from sweety.util.db_wrapper import DBWrapper
+from sweety.util.ints import uint32
 
 log = logging.getLogger(__name__)
 

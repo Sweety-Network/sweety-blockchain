@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.ints import uint64
-from flax.util.streamable import streamable, Streamable
-from flax.wallet.lineage_proof import LineageProof
-from flax.types.blockchain_format.program import Program
-from flax.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.ints import uint64
+from sweety.util.streamable import streamable, Streamable
+from sweety.wallet.lineage_proof import LineageProof
+from sweety.types.blockchain_format.program import Program
+from sweety.types.blockchain_format.coin import Coin
 
 
 @dataclass(frozen=True)

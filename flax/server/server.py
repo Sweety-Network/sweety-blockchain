@@ -15,20 +15,20 @@ from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes, serialization
 
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.protocols.protocol_state_machine import message_requires_reply
-from flax.protocols.protocol_timing import INVALID_PROTOCOL_BAN_SECONDS, API_EXCEPTION_BAN_SECONDS
-from flax.protocols.shared_protocol import protocol_version
-from flax.server.introducer_peers import IntroducerPeers
-from flax.server.outbound_message import Message, NodeType
-from flax.server.ssl_context import private_ssl_paths, public_ssl_paths
-from flax.server.ws_connection import WSFlaxConnection
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.peer_info import PeerInfo
-from flax.util.errors import Err, ProtocolError
-from flax.util.ints import uint16
-from flax.util.network import is_localhost, is_in_network
-from flax.util.ssl import verify_ssl_certs_and_keys
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.protocols.protocol_state_machine import message_requires_reply
+from sweety.protocols.protocol_timing import INVALID_PROTOCOL_BAN_SECONDS, API_EXCEPTION_BAN_SECONDS
+from sweety.protocols.shared_protocol import protocol_version
+from sweety.server.introducer_peers import IntroducerPeers
+from sweety.server.outbound_message import Message, NodeType
+from sweety.server.ssl_context import private_ssl_paths, public_ssl_paths
+from sweety.server.ws_connection import WSSweetyConnection
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.peer_info import PeerInfo
+from sweety.util.errors import Err, ProtocolError
+from sweety.util.ints import uint16
+from sweety.util.network import is_localhost, is_in_network
+from sweety.util.ssl import verify_ssl_certs_and_keys
 
 
 def ssl_context_for_server(
@@ -79,7 +79,7 @@ def ssl_context_for_client(
     return ssl_context
 
 
-class FlaxServer:
+class SweetyServer:
     def __init__(
         self,
         port: int,
@@ -93,16 +93,16 @@ class FlaxServer:
         root_path: Path,
         config: Dict,
         private_ca_crt_key: Tuple[Path, Path],
-        flax_ca_crt_key: Tuple[Path, Path],
+        sweety_ca_crt_key: Tuple[Path, Path],
         name: str = None,
         introducer_peers: Optional[IntroducerPeers] = None,
     ):
         # Keeps track of all connections to and from this node.
         logging.basicConfig(level=logging.DEBUG)
-        self.all_connections: Dict[bytes32, WSFlaxConnection] = {}
+        self.all_connections: Dict[bytes32, WSSweetyConnection] = {}
         self.tasks: Set[asyncio.Task] = set()
 
-        self.connection_by_type: Dict[NodeType, Dict[bytes32, WSFlaxConnection]] = {
+        self.connection_by_type: Dict[NodeType, Dict[bytes32, WSSweetyConnection]] = {
             NodeType.FULL_NODE: {},
             NodeType.WALLET: {},
             NodeType.HARVESTER: {},
@@ -143,7 +143,7 @@ class FlaxServer:
         else:
             self.p2p_crt_path, self.p2p_key_path = None, None
         self.ca_private_crt_path, self.ca_private_key_path = private_ca_crt_key
-        self.flax_ca_crt_path, self.flax_ca_key_path = flax_ca_crt_key
+        self.sweety_ca_crt_path, self.sweety_ca_key_path = sweety_ca_crt_key
         self.node_id = self.my_id()
 
         self.incoming_task = asyncio.create_task(self.incoming_api_task())
@@ -187,7 +187,7 @@ class FlaxServer:
         """
         while True:
             await asyncio.sleep(600)
-            to_remove: List[WSFlaxConnection] = []
+            to_remove: List[WSSweetyConnection] = []
             for connection in self.all_connections.values():
                 if self._local_type == NodeType.FULL_NODE and connection.connection_type == NodeType.FULL_NODE:
                     if time.time() - connection.last_message_time > 1800:
@@ -228,7 +228,7 @@ class FlaxServer:
         else:
             self.p2p_crt_path, self.p2p_key_path = public_ssl_paths(self.root_path, self.config)
             ssl_context = ssl_context_for_server(
-                self.flax_ca_crt_path, self.flax_ca_key_path, self.p2p_crt_path, self.p2p_key_path, log=self.log
+                self.sweety_ca_crt_path, self.sweety_ca_key_path, self.p2p_crt_path, self.p2p_key_path, log=self.log
             )
 
         self.site = web.TCPSite(
@@ -252,9 +252,9 @@ class FlaxServer:
         peer_id = bytes32(der_cert.fingerprint(hashes.SHA256()))
         if peer_id == self.node_id:
             return ws
-        connection: Optional[WSFlaxConnection] = None
+        connection: Optional[WSSweetyConnection] = None
         try:
-            connection = WSFlaxConnection(
+            connection = WSSweetyConnection(
                 self._local_type,
                 ws,
                 self._port,
@@ -320,7 +320,7 @@ class FlaxServer:
         await close_event.wait()
         return ws
 
-    async def connection_added(self, connection: WSFlaxConnection, on_connect=None):
+    async def connection_added(self, connection: WSSweetyConnection, on_connect=None):
         # If we already had a connection to this peer_id, close the old one. This is secure because peer_ids are based
         # on TLS public keys
         if connection.peer_node_id in self.all_connections:
@@ -369,10 +369,10 @@ class FlaxServer:
             )
         else:
             ssl_context = ssl_context_for_client(
-                self.flax_ca_crt_path, self.flax_ca_key_path, self.p2p_crt_path, self.p2p_key_path
+                self.sweety_ca_crt_path, self.sweety_ca_key_path, self.p2p_crt_path, self.p2p_key_path
             )
         session = None
-        connection: Optional[WSFlaxConnection] = None
+        connection: Optional[WSSweetyConnection] = None
         try:
             # Crawler/DNS introducer usually uses a lower timeout than the default
             timeout_value = (
@@ -410,7 +410,7 @@ class FlaxServer:
             if peer_id == self.node_id:
                 raise RuntimeError(f"Trying to connect to a peer ({target_node}) with the same peer_id: {peer_id}")
 
-            connection = WSFlaxConnection(
+            connection = WSSweetyConnection(
                 self._local_type,
                 ws,
                 self._port,
@@ -468,7 +468,7 @@ class FlaxServer:
 
         return False
 
-    def connection_closed(self, connection: WSFlaxConnection, ban_time: int):
+    def connection_closed(self, connection: WSSweetyConnection, ban_time: int):
         if is_localhost(connection.peer_host) and ban_time != 0:
             self.log.warning(f"Trying to ban localhost for {ban_time}, but will not ban")
             ban_time = 0
@@ -517,7 +517,7 @@ class FlaxServer:
             if payload_inc is None or connection_inc is None:
                 continue
 
-            async def api_call(full_message: Message, connection: WSFlaxConnection, task_id):
+            async def api_call(full_message: Message, connection: WSSweetyConnection, task_id):
                 start_time = time.time()
                 try:
                     if self.received_message_callback is not None:
@@ -604,7 +604,7 @@ class FlaxServer:
         self,
         messages: List[Message],
         node_type: NodeType,
-        origin_peer: WSFlaxConnection,
+        origin_peer: WSSweetyConnection,
     ):
         for node_id, connection in self.all_connections.items():
             if node_id == origin_peer.peer_node_id:
@@ -647,7 +647,7 @@ class FlaxServer:
             for message in messages:
                 await connection.send_message(message)
 
-    def get_outgoing_connections(self) -> List[WSFlaxConnection]:
+    def get_outgoing_connections(self) -> List[WSSweetyConnection]:
         result = []
         for _, connection in self.all_connections.items():
             if connection.is_outbound:
@@ -655,7 +655,7 @@ class FlaxServer:
 
         return result
 
-    def get_full_node_outgoing_connections(self) -> List[WSFlaxConnection]:
+    def get_full_node_outgoing_connections(self) -> List[WSSweetyConnection]:
         result = []
         connections = self.get_full_node_connections()
         for connection in connections:
@@ -663,10 +663,10 @@ class FlaxServer:
                 result.append(connection)
         return result
 
-    def get_full_node_connections(self) -> List[WSFlaxConnection]:
+    def get_full_node_connections(self) -> List[WSSweetyConnection]:
         return list(self.connection_by_type[NodeType.FULL_NODE].values())
 
-    def get_connections(self, node_type: Optional[NodeType] = None) -> List[WSFlaxConnection]:
+    def get_connections(self, node_type: Optional[NodeType] = None) -> List[WSSweetyConnection]:
         result = []
         for _, connection in self.all_connections.items():
             if node_type is None or connection.connection_type == node_type:
@@ -710,7 +710,7 @@ class FlaxServer:
         ip = None
         port = self._port
 
-        # Use flax's service first.
+        # Use sweety's service first.
         try:
             timeout = ClientTimeout(total=15)
             async with ClientSession(timeout=timeout) as session:
@@ -753,7 +753,7 @@ class FlaxServer:
             return inbound_count < self.config["max_inbound_timelord"]
         return True
 
-    def is_trusted_peer(self, peer: WSFlaxConnection, trusted_peers: Dict) -> bool:
+    def is_trusted_peer(self, peer: WSSweetyConnection, trusted_peers: Dict) -> bool:
         if trusted_peers is None:
             return False
         for trusted_peer in trusted_peers:

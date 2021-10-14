@@ -5,25 +5,25 @@ import signal
 from secrets import token_bytes
 from typing import Dict, List, Optional
 
-from flax.consensus.constants import ConsensusConstants
-from flax.daemon.server import WebSocketServer, create_server_for_daemon, daemon_launch_lock_path, singleton
-from flax.full_node.full_node_api import FullNodeAPI
-from flax.server.start_farmer import service_kwargs_for_farmer
-from flax.server.start_full_node import service_kwargs_for_full_node
-from flax.server.start_harvester import service_kwargs_for_harvester
-from flax.server.start_introducer import service_kwargs_for_introducer
-from flax.server.start_service import Service
-from flax.server.start_timelord import service_kwargs_for_timelord
-from flax.server.start_wallet import service_kwargs_for_wallet
-from flax.simulator.start_simulator import service_kwargs_for_full_node_simulator
-from flax.timelord.timelord_launcher import kill_processes, spawn_process
-from flax.types.peer_info import PeerInfo
-from flax.util.bech32m import encode_puzzle_hash
+from sweety.consensus.constants import ConsensusConstants
+from sweety.daemon.server import WebSocketServer, create_server_for_daemon, daemon_launch_lock_path, singleton
+from sweety.full_node.full_node_api import FullNodeAPI
+from sweety.server.start_farmer import service_kwargs_for_farmer
+from sweety.server.start_full_node import service_kwargs_for_full_node
+from sweety.server.start_harvester import service_kwargs_for_harvester
+from sweety.server.start_introducer import service_kwargs_for_introducer
+from sweety.server.start_service import Service
+from sweety.server.start_timelord import service_kwargs_for_timelord
+from sweety.server.start_wallet import service_kwargs_for_wallet
+from sweety.simulator.start_simulator import service_kwargs_for_full_node_simulator
+from sweety.timelord.timelord_launcher import kill_processes, spawn_process
+from sweety.types.peer_info import PeerInfo
+from sweety.util.bech32m import encode_puzzle_hash
 from tests.block_tools import create_block_tools, create_block_tools_async, test_constants
 from tests.util.keyring import TempKeyring
-from flax.util.hash import std_hash
-from flax.util.ints import uint16, uint32
-from flax.util.keychain import bytes_to_mnemonic
+from sweety.util.hash import std_hash
+from sweety.util.ints import uint16, uint32
+from sweety.util.keychain import bytes_to_mnemonic
 from tests.time_out_assert import time_out_assert_custom_interval
 
 
@@ -217,10 +217,10 @@ async def setup_farmer(
     config = bt.config["farmer"]
     config_pool = bt.config["pool"]
 
-    config["xfx_target_address"] = encode_puzzle_hash(b_tools.farmer_ph, "xfx")
+    config["sty_target_address"] = encode_puzzle_hash(b_tools.farmer_ph, "sty")
     config["pool_public_keys"] = [bytes(pk).hex() for pk in b_tools.pool_pubkeys]
     config["port"] = port
-    config_pool["xfx_target_address"] = encode_puzzle_hash(b_tools.pool_ph, "xfx")
+    config_pool["sty_target_address"] = encode_puzzle_hash(b_tools.pool_ph, "sty")
 
     if full_node_port:
         config["full_node_peer"]["host"] = self_hostname

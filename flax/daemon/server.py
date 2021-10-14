@@ -16,16 +16,16 @@ from typing import Any, Dict, List, Optional, TextIO, Tuple, cast
 
 from websockets import ConnectionClosedOK, WebSocketException, WebSocketServerProtocol, serve
 
-from flax.cmds.init_funcs import check_keys, flax_init
-from flax.cmds.passphrase_funcs import default_passphrase, using_default_passphrase
-from flax.daemon.keychain_server import KeychainServer, keychain_commands
-from flax.daemon.windows_signal import kill
-from flax.server.server import ssl_context_for_root, ssl_context_for_server
-from flax.ssl.create_ssl import get_mozilla_ca_crt
-from flax.util.flax_logging import initialize_logging
-from flax.util.config import load_config
-from flax.util.json_util import dict_to_json_str
-from flax.util.keychain import (
+from sweety.cmds.init_funcs import check_keys, sweety_init
+from sweety.cmds.passphrase_funcs import default_passphrase, using_default_passphrase
+from sweety.daemon.keychain_server import KeychainServer, keychain_commands
+from sweety.daemon.windows_signal import kill
+from sweety.server.server import ssl_context_for_root, ssl_context_for_server
+from sweety.ssl.create_ssl import get_mozilla_ca_crt
+from sweety.util.sweety_logging import initialize_logging
+from sweety.util.config import load_config
+from sweety.util.json_util import dict_to_json_str
+from sweety.util.keychain import (
     Keychain,
     KeyringCurrentPassphraseIsInvalid,
     KeyringRequiresMigration,
@@ -33,17 +33,17 @@ from flax.util.keychain import (
     supports_keyring_passphrase,
     supports_os_passphrase_storage,
 )
-from flax.util.path import mkdir
-from flax.util.service_groups import validate_service
-from flax.util.setproctitle import setproctitle
-from flax.util.ws_message import WsRpcMessage, create_payload, format_response
+from sweety.util.path import mkdir
+from sweety.util.service_groups import validate_service
+from sweety.util.setproctitle import setproctitle
+from sweety.util.ws_message import WsRpcMessage, create_payload, format_response
 
 io_pool_exc = ThreadPoolExecutor()
 
 try:
     from aiohttp import ClientSession, web
 except ModuleNotFoundError:
-    print("Error: Make sure to run . ./activate from the project folder before starting Flax.")
+    print("Error: Make sure to run . ./activate from the project folder before starting Sweety.")
     quit()
 
 try:
@@ -55,7 +55,7 @@ except ImportError:
 
 log = logging.getLogger(__name__)
 
-service_plotter = "flax plots create"
+service_plotter = "sweety plots create"
 
 
 async def fetch(url: str):
@@ -88,15 +88,15 @@ class PlotEvent(str, Enum):
 # determine if application is a script file or frozen exe
 if getattr(sys, "frozen", False):
     name_map = {
-        "flax": "flax",
-        "flax_wallet": "start_wallet",
-        "flax_full_node": "start_full_node",
-        "flax_harvester": "start_harvester",
-        "flax_farmer": "start_farmer",
-        "flax_introducer": "start_introducer",
-        "flax_timelord": "start_timelord",
-        "flax_timelord_launcher": "timelord_launcher",
-        "flax_full_node_simulator": "start_simulator",
+        "sweety": "sweety",
+        "sweety_wallet": "start_wallet",
+        "sweety_full_node": "start_full_node",
+        "sweety_harvester": "start_harvester",
+        "sweety_farmer": "start_farmer",
+        "sweety_introducer": "start_introducer",
+        "sweety_timelord": "start_timelord",
+        "sweety_timelord_launcher": "timelord_launcher",
+        "sweety_full_node_simulator": "start_simulator",
     }
 
     def executable_for_service(service_name: str) -> str:
@@ -969,7 +969,7 @@ class WebSocketServer:
 
         # TODO: fix this hack
         asyncio.get_event_loop().call_later(5, lambda *args: sys.exit(0))
-        log.info("flax daemon exiting in 5 seconds")
+        log.info("sweety daemon exiting in 5 seconds")
 
         response = {"success": True}
         return response
@@ -1026,8 +1026,8 @@ def plotter_log_path(root_path: Path, id: str):
 
 
 def launch_plotter(root_path: Path, service_name: str, service_array: List[str], id: str):
-    # we need to pass on the possibly altered FLAX_ROOT
-    os.environ["FLAX_ROOT"] = str(root_path)
+    # we need to pass on the possibly altered SWEETY_ROOT
+    os.environ["SWEETY_ROOT"] = str(root_path)
     service_executable = executable_for_service(service_array[0])
 
     # Swap service name with name of executable
@@ -1076,21 +1076,21 @@ def launch_service(root_path: Path, service_command) -> Tuple[subprocess.Popen, 
     """
     Launch a child process.
     """
-    # set up FLAX_ROOT
+    # set up SWEETY_ROOT
     # invoke correct script
     # save away PID
 
-    # we need to pass on the possibly altered FLAX_ROOT
-    os.environ["FLAX_ROOT"] = str(root_path)
+    # we need to pass on the possibly altered SWEETY_ROOT
+    os.environ["SWEETY_ROOT"] = str(root_path)
 
-    log.debug(f"Launching service with FLAX_ROOT: {os.environ['FLAX_ROOT']}")
+    log.debug(f"Launching service with SWEETY_ROOT: {os.environ['SWEETY_ROOT']}")
 
     # Insert proper e
     service_array = service_command.split()
     service_executable = executable_for_service(service_array[0])
     service_array[0] = service_executable
 
-    if service_command == "flax_full_node_simulator":
+    if service_command == "sweety_full_node_simulator":
         # Set the -D/--connect_to_daemon flag to signify that the child should connect
         # to the daemon to access the keychain
         service_array.append("-D")
@@ -1258,11 +1258,11 @@ def singleton(lockfile: Path, text: str = "semaphore") -> Optional[TextIO]:
 
 
 async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> int:
-    # When wait_for_unlock is true, we want to skip the check_keys() call in flax_init
+    # When wait_for_unlock is true, we want to skip the check_keys() call in sweety_init
     # since it might be necessary to wait for the GUI to unlock the keyring first.
-    flax_init(root_path, should_check_keys=(not wait_for_unlock))
+    sweety_init(root_path, should_check_keys=(not wait_for_unlock))
     config = load_config(root_path, "config.yaml")
-    setproctitle("flax_daemon")
+    setproctitle("sweety_daemon")
     initialize_logging("daemon", config["logging"], root_path)
     lockfile = singleton(daemon_launch_lock_path(root_path))
     crt_path = root_path / config["daemon_ssl"]["private_crt"]
@@ -1304,8 +1304,8 @@ def run_daemon(root_path: Path, wait_for_unlock: bool = False) -> int:
 
 
 def main(argv) -> int:
-    from flax.util.default_root import DEFAULT_ROOT_PATH
-    from flax.util.keychain import Keychain
+    from sweety.util.default_root import DEFAULT_ROOT_PATH
+    from sweety.util.keychain import Keychain
 
     wait_for_unlock = "--wait-for-unlock" in argv and Keychain.is_keyring_locked()
     return run_daemon(DEFAULT_ROOT_PATH, wait_for_unlock)

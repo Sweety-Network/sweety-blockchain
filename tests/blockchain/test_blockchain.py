@@ -11,30 +11,30 @@ import pytest
 from blspy import AugSchemeMPL, G2Element
 from clvm.casts import int_to_bytes
 
-from flax.consensus.block_rewards import calculate_base_farmer_reward
-from flax.consensus.blockchain import ReceiveBlockResult
-from flax.consensus.coinbase import create_farmer_coin
-from flax.consensus.pot_iterations import is_overflow_block
-from flax.full_node.bundle_tools import detect_potential_template_generator
-from flax.types.blockchain_format.classgroup import ClassgroupElement
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.foliage import TransactionsInfo
-from flax.types.blockchain_format.program import SerializedProgram
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.slots import InfusedChallengeChainSubSlot
-from flax.types.blockchain_format.vdf import VDFInfo, VDFProof
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.condition_with_args import ConditionWithArgs
-from flax.types.end_of_slot_bundle import EndOfSubSlotBundle
-from flax.types.full_block import FullBlock
-from flax.types.spend_bundle import SpendBundle
-from flax.types.unfinished_block import UnfinishedBlock
+from sweety.consensus.block_rewards import calculate_base_farmer_reward
+from sweety.consensus.blockchain import ReceiveBlockResult
+from sweety.consensus.coinbase import create_farmer_coin
+from sweety.consensus.pot_iterations import is_overflow_block
+from sweety.full_node.bundle_tools import detect_potential_template_generator
+from sweety.types.blockchain_format.classgroup import ClassgroupElement
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.foliage import TransactionsInfo
+from sweety.types.blockchain_format.program import SerializedProgram
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.slots import InfusedChallengeChainSubSlot
+from sweety.types.blockchain_format.vdf import VDFInfo, VDFProof
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.condition_with_args import ConditionWithArgs
+from sweety.types.end_of_slot_bundle import EndOfSubSlotBundle
+from sweety.types.full_block import FullBlock
+from sweety.types.spend_bundle import SpendBundle
+from sweety.types.unfinished_block import UnfinishedBlock
 from tests.block_tools import create_block_tools_async, get_vdf_info_and_proof
-from flax.util.errors import Err
-from flax.util.hash import std_hash
-from flax.util.ints import uint8, uint64, uint32
-from flax.util.merkle_set import MerkleSet
-from flax.util.recursive_replace import recursive_replace
+from sweety.util.errors import Err
+from sweety.util.hash import std_hash
+from sweety.util.ints import uint8, uint64, uint32
+from sweety.util.merkle_set import MerkleSet
+from sweety.util.recursive_replace import recursive_replace
 from tests.wallet_tools import WalletTool
 from tests.core.fixtures import default_400_blocks  # noqa: F401; noqa: F401
 from tests.core.fixtures import default_1000_blocks  # noqa: F401
@@ -44,7 +44,7 @@ from tests.core.fixtures import empty_blockchain  # noqa: F401
 from tests.core.fixtures import create_blockchain
 from tests.setup_nodes import bt, test_constants
 from tests.util.keyring import TempKeyring
-from flax.wallet.puzzles.p2_delegated_puzzle_or_hidden_puzzle import (
+from sweety.wallet.puzzles.p2_delegated_puzzle_or_hidden_puzzle import (
     DEFAULT_HIDDEN_PUZZLE_HASH,
     calculate_synthetic_secret_key,
 )

@@ -9,15 +9,15 @@ from PyInstaller.utils.hooks import collect_submodules, copy_metadata
 
 THIS_IS_WINDOWS = platform.system().lower().startswith("win")
 
-ROOT = pathlib.Path(importlib.import_module("flax").__file__).absolute().parent.parent
+ROOT = pathlib.Path(importlib.import_module("sweety").__file__).absolute().parent.parent
 
 
 def solve_name_collision_problem(analysis):
     """
-    There is a collision between the `flax` file name (which is the executable)
-    and the `flax` directory, which contains non-code resources like `english.txt`.
+    There is a collision between the `sweety` file name (which is the executable)
+    and the `sweety` directory, which contains non-code resources like `english.txt`.
     We move all the resources in the zipped area so there is no
-    need to create the `flax` directory, since the names collide.
+    need to create the `sweety` directory, since the names collide.
 
     Fetching data now requires going into a zip file, so it will be slower.
     It's best if files that are used frequently are cached.
@@ -31,7 +31,7 @@ def solve_name_collision_problem(analysis):
     zipped = []
     datas = []
     for data in analysis.datas:
-        if str(data[0]).startswith("flax/"):
+        if str(data[0]).startswith("sweety/"):
             zipped.append(data)
         else:
             datas.append(data)
@@ -48,7 +48,7 @@ keyring_imports = collect_submodules("keyring.backends")
 # keyring uses entrypoints to read keyring.backends from metadata file entry_points.txt.
 keyring_datas = copy_metadata("keyring")[0]
 
-version_data = copy_metadata(get_distribution("flax-blockchain"))[0]
+version_data = copy_metadata(get_distribution("sweety-blockchain"))[0]
 
 block_cipher = None
 
@@ -61,9 +61,9 @@ SERVERS = [
     "timelord",
 ]
 
-# TODO: collapse all these entry points into one `flax_exec` entrypoint that accepts the server as a parameter
+# TODO: collapse all these entry points into one `sweety_exec` entrypoint that accepts the server as a parameter
 
-entry_points = ["flax.cmds.flax"] + [f"flax.server.start_{s}" for s in SERVERS]
+entry_points = ["sweety.cmds.sweety"] + [f"sweety.server.start_{s}" for s in SERVERS]
 
 hiddenimports = []
 hiddenimports.extend(entry_points)
@@ -77,10 +77,10 @@ if THIS_IS_WINDOWS:
 
 # this probably isn't necessary
 if THIS_IS_WINDOWS:
-    entry_points.extend(["aiohttp", "flax.util.bip39"])
+    entry_points.extend(["aiohttp", "sweety.util.bip39"])
 
 if THIS_IS_WINDOWS:
-    flax_mod = importlib.import_module("flax")
+    sweety_mod = importlib.import_module("sweety")
     dll_paths = ROOT / "*.dll"
 
     binaries = [
@@ -101,10 +101,10 @@ if THIS_IS_WINDOWS:
 
 datas = []
 
-datas.append((f"{ROOT}/flax/util/english.txt", "flax/util"))
-datas.append((f"{ROOT}/flax/util/initial-config.yaml", "flax/util"))
-datas.append((f"{ROOT}/flax/wallet/puzzles/*.hex", "flax/wallet/puzzles"))
-datas.append((f"{ROOT}/flax/ssl/*", "flax/ssl"))
+datas.append((f"{ROOT}/sweety/util/english.txt", "sweety/util"))
+datas.append((f"{ROOT}/sweety/util/initial-config.yaml", "sweety/util"))
+datas.append((f"{ROOT}/sweety/wallet/puzzles/*.hex", "sweety/wallet/puzzles"))
+datas.append((f"{ROOT}/sweety/ssl/*", "sweety/ssl"))
 datas.append((f"{ROOT}/mozilla-ca/*", "mozilla-ca"))
 datas.append(version_data)
 
@@ -154,11 +154,11 @@ def add_binary(name, path_to_script, collect_args):
 
 COLLECT_ARGS = []
 
-add_binary("flax", f"{ROOT}/flax/cmds/flax.py", COLLECT_ARGS)
-add_binary("daemon", f"{ROOT}/flax/daemon/server.py", COLLECT_ARGS)
+add_binary("sweety", f"{ROOT}/sweety/cmds/sweety.py", COLLECT_ARGS)
+add_binary("daemon", f"{ROOT}/sweety/daemon/server.py", COLLECT_ARGS)
 
 for server in SERVERS:
-    add_binary(f"start_{server}", f"{ROOT}/flax/server/start_{server}.py", COLLECT_ARGS)
+    add_binary(f"start_{server}", f"{ROOT}/sweety/server/start_{server}.py", COLLECT_ARGS)
 
 COLLECT_KWARGS = dict(
     strip=False,

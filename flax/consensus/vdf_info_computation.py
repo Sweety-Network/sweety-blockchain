@@ -1,12 +1,12 @@
 from typing import List, Optional
 
-from flax.consensus.block_record import BlockRecord
-from flax.consensus.blockchain_interface import BlockchainInterface
-from flax.consensus.constants import ConsensusConstants
-from flax.types.blockchain_format.classgroup import ClassgroupElement
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.end_of_slot_bundle import EndOfSubSlotBundle
-from flax.util.ints import uint64, uint128
+from sweety.consensus.block_record import BlockRecord
+from sweety.consensus.blockchain_interface import BlockchainInterface
+from sweety.consensus.constants import ConsensusConstants
+from sweety.types.blockchain_format.classgroup import ClassgroupElement
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.end_of_slot_bundle import EndOfSubSlotBundle
+from sweety.util.ints import uint64, uint128
 
 
 def get_signage_point_vdf_info(

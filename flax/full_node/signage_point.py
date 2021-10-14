@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from flax.types.blockchain_format.vdf import VDFInfo, VDFProof
-from flax.util.streamable import Streamable, streamable
+from sweety.types.blockchain_format.vdf import VDFInfo, VDFProof
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

@@ -1,11 +1,11 @@
 import click
 import sys
 
-from flax.daemon.client import acquire_connection_to_daemon
-from flax.util.keychain import Keychain, obtain_current_passphrase, supports_os_passphrase_storage
-from flax.util.keyring_wrapper import DEFAULT_PASSPHRASE_IF_NO_MASTER_PASSPHRASE
-from flax.util.misc import prompt_yes_no
-from flax.util.ws_message import WsRpcMessage
+from sweety.daemon.client import acquire_connection_to_daemon
+from sweety.util.keychain import Keychain, obtain_current_passphrase, supports_os_passphrase_storage
+from sweety.util.keyring_wrapper import DEFAULT_PASSPHRASE_IF_NO_MASTER_PASSPHRASE
+from sweety.util.misc import prompt_yes_no
+from sweety.util.ws_message import WsRpcMessage
 from getpass import getpass
 from io import TextIOWrapper
 from pathlib import Path
@@ -59,7 +59,7 @@ def prompt_to_save_passphrase() -> bool:
             print(
                 "\n"
                 "Your passphrase can be stored in your system's secure credential store. "
-                "Other Flax processes will be able to access your keys without prompting for your passphrase."
+                "Other Sweety processes will be able to access your keys without prompting for your passphrase."
             )
             save = prompt_yes_no(f"Would you like to save your passphrase to the {location} (y/n) ")
 
@@ -100,7 +100,7 @@ def read_passphrase_from_file(passphrase_file: TextIOWrapper) -> str:
 def initialize_passphrase() -> None:
     if Keychain.has_master_passphrase():
         print("Keyring is already protected by a passphrase")
-        print("\nUse 'flax passphrase set' or 'flax passphrase remove' to update or remove your passphrase")
+        print("\nUse 'sweety passphrase set' or 'sweety passphrase remove' to update or remove your passphrase")
         sys.exit(1)
 
     # We'll rely on Keyring initialization to leverage the cached passphrase for

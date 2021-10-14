@@ -4,12 +4,12 @@ import asyncio
 import pytest
 from colorlog import logging
 
-from flax.consensus.block_rewards import calculate_base_farmer_reward, calculate_pool_reward
-from flax.protocols import full_node_protocol
-from flax.simulator.simulator_protocol import FarmNewBlockProtocol
-from flax.types.peer_info import PeerInfo
-from flax.util.ints import uint16, uint32
-from flax.wallet.wallet_state_manager import WalletStateManager
+from sweety.consensus.block_rewards import calculate_base_farmer_reward, calculate_pool_reward
+from sweety.protocols import full_node_protocol
+from sweety.simulator.simulator_protocol import FarmNewBlockProtocol
+from sweety.types.peer_info import PeerInfo
+from sweety.util.ints import uint16, uint32
+from sweety.wallet.wallet_state_manager import WalletStateManager
 from tests.connection_utils import disconnect_all_and_reconnect
 from tests.core.fixtures import default_400_blocks, default_1000_blocks
 from tests.setup_nodes import bt, self_hostname, setup_node_and_wallet, setup_simulators_and_wallets, test_constants

@@ -1,14 +1,14 @@
 from typing import Dict, List, Optional, Any
 
-from flax.rpc.rpc_client import RpcClient
-from flax.types.blockchain_format.sized_bytes import bytes32
+from sweety.rpc.rpc_client import RpcClient
+from sweety.types.blockchain_format.sized_bytes import bytes32
 
 
 class FarmerRpcClient(RpcClient):
     """
-    Client to Flax RPC, connects to a local farmer. Uses HTTP/JSON, and converts back from
+    Client to Sweety RPC, connects to a local farmer. Uses HTTP/JSON, and converts back from
     JSON into native python objects before returning. All api calls use POST requests.
-    Note that this is not the same as the peer protocol, or wallet protocol (which run Flax's
+    Note that this is not the same as the peer protocol, or wallet protocol (which run Sweety's
     protocol on top of TCP), it's a separate protocol on top of HTTP that provides easy access
     to the full node.
     """

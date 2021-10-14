@@ -1,7 +1,7 @@
 from typing import Dict
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.mempool_item import MempoolItem
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.mempool_item import MempoolItem
 
 
 class PendingTxCache:

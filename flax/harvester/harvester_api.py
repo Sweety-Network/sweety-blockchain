@@ -5,20 +5,20 @@ from typing import Callable, List, Tuple
 
 from blspy import AugSchemeMPL, G2Element, G1Element
 
-from flax.consensus.pot_iterations import calculate_iterations_quality, calculate_sp_interval_iters
-from flax.harvester.harvester import Harvester
-from flax.plotting.util import PlotInfo, parse_plot_info
-from flax.protocols import harvester_protocol
-from flax.protocols.farmer_protocol import FarmingInfo
-from flax.protocols.harvester_protocol import Plot
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.server.outbound_message import make_msg
-from flax.server.ws_connection import WSFlaxConnection
-from flax.types.blockchain_format.proof_of_space import ProofOfSpace
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.api_decorators import api_request, peer_required
-from flax.util.ints import uint8, uint32, uint64
-from flax.wallet.derive_keys import master_sk_to_local_sk
+from sweety.consensus.pot_iterations import calculate_iterations_quality, calculate_sp_interval_iters
+from sweety.harvester.harvester import Harvester
+from sweety.plotting.util import PlotInfo, parse_plot_info
+from sweety.protocols import harvester_protocol
+from sweety.protocols.farmer_protocol import FarmingInfo
+from sweety.protocols.harvester_protocol import Plot
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.server.outbound_message import make_msg
+from sweety.server.ws_connection import WSSweetyConnection
+from sweety.types.blockchain_format.proof_of_space import ProofOfSpace
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.api_decorators import api_request, peer_required
+from sweety.util.ints import uint8, uint32, uint64
+from sweety.wallet.derive_keys import master_sk_to_local_sk
 
 
 class HarvesterAPI:
@@ -46,7 +46,7 @@ class HarvesterAPI:
     @peer_required
     @api_request
     async def new_signage_point_harvester(
-        self, new_challenge: harvester_protocol.NewSignagePointHarvester, peer: WSFlaxConnection
+        self, new_challenge: harvester_protocol.NewSignagePointHarvester, peer: WSSweetyConnection
     ):
         """
         The harvester receives a new signage point from the farmer, this happens at the start of each slot.

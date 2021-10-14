@@ -7,8 +7,8 @@ from typing import Dict, List, Optional, Tuple, Union
 from blspy import G1Element, PrivateKey
 from chiapos import DiskProver
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.config import load_config, save_config
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.config import load_config, save_config
 
 log = logging.getLogger(__name__)
 

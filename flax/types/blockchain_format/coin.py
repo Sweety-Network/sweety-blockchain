@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from typing import Any, List
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.clvm import int_to_bytes
-from flax.util.hash import std_hash
-from flax.util.ints import uint64
-from flax.util.streamable import Streamable, streamable
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.clvm import int_to_bytes
+from sweety.util.hash import std_hash
+from sweety.util.ints import uint64
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

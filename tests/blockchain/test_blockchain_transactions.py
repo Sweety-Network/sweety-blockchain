@@ -4,14 +4,14 @@ import logging
 import pytest
 from clvm.casts import int_to_bytes
 
-from flax.consensus.blockchain import ReceiveBlockResult
-from flax.protocols import full_node_protocol
-from flax.types.announcement import Announcement
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.condition_with_args import ConditionWithArgs
-from flax.types.spend_bundle import SpendBundle
-from flax.util.errors import ConsensusError, Err
-from flax.util.ints import uint64
+from sweety.consensus.blockchain import ReceiveBlockResult
+from sweety.protocols import full_node_protocol
+from sweety.types.announcement import Announcement
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.condition_with_args import ConditionWithArgs
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.errors import ConsensusError, Err
+from sweety.util.ints import uint64
 from tests.wallet_tools import WalletTool
 from tests.core.full_node.test_full_node import connect_and_get_peer
 from tests.setup_nodes import bt, setup_two_nodes, test_constants

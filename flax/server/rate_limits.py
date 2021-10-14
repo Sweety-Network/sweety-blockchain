@@ -4,8 +4,8 @@ import time
 from collections import Counter
 from typing import Optional
 
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.server.outbound_message import Message
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.server.outbound_message import Message
 
 log = logging.getLogger(__name__)
 

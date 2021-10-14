@@ -2,10 +2,10 @@ import logging
 import time
 from typing import Callable, Optional
 
-from flax.protocols import timelord_protocol
-from flax.timelord.timelord import Chain, IterationType, Timelord, iters_from_block
-from flax.util.api_decorators import api_request
-from flax.util.ints import uint64
+from sweety.protocols import timelord_protocol
+from sweety.timelord.timelord import Chain, IterationType, Timelord, iters_from_block
+from sweety.util.api_decorators import api_request
+from sweety.util.ints import uint64
 
 log = logging.getLogger(__name__)
 

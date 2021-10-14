@@ -6,23 +6,23 @@ import signal
 from sys import platform
 from typing import Any, Callable, List, Optional, Tuple
 
-from flax.daemon.server import singleton, service_launch_lock_path
-from flax.server.ssl_context import flax_ssl_ca_paths, private_ssl_ca_paths
+from sweety.daemon.server import singleton, service_launch_lock_path
+from sweety.server.ssl_context import sweety_ssl_ca_paths, private_ssl_ca_paths
 
 try:
     import uvloop
 except ImportError:
     uvloop = None
 
-from flax.rpc.rpc_server import start_rpc_server
-from flax.server.outbound_message import NodeType
-from flax.server.server import FlaxServer
-from flax.server.upnp import UPnP
-from flax.types.peer_info import PeerInfo
-from flax.util.flax_logging import initialize_logging
-from flax.util.config import load_config, load_config_cli
-from flax.util.setproctitle import setproctitle
-from flax.util.ints import uint16
+from sweety.rpc.rpc_server import start_rpc_server
+from sweety.server.outbound_message import NodeType
+from sweety.server.server import SweetyServer
+from sweety.server.upnp import UPnP
+from sweety.types.peer_info import PeerInfo
+from sweety.util.sweety_logging import initialize_logging
+from sweety.util.config import load_config, load_config_cli
+from sweety.util.setproctitle import setproctitle
+from sweety.util.ints import uint16
 
 from .reconnect_task import start_reconnect_task
 
@@ -64,7 +64,7 @@ class Service:
         self._rpc_close_task: Optional[asyncio.Task] = None
         self._network_id: str = network_id
 
-        proctitle_name = f"flax_{service_name}"
+        proctitle_name = f"sweety_{service_name}"
         setproctitle(proctitle_name)
         self._log = logging.getLogger(service_name)
 
@@ -76,11 +76,11 @@ class Service:
 
         self._rpc_info = rpc_info
         private_ca_crt, private_ca_key = private_ssl_ca_paths(root_path, self.config)
-        flax_ca_crt, flax_ca_key = flax_ssl_ca_paths(root_path, self.config)
+        sweety_ca_crt, sweety_ca_key = sweety_ssl_ca_paths(root_path, self.config)
         inbound_rlp = self.config.get("inbound_rate_limit_percent")
         outbound_rlp = self.config.get("outbound_rate_limit_percent")
         assert inbound_rlp and outbound_rlp
-        self._server = FlaxServer(
+        self._server = SweetyServer(
             advertised_port,
             node,
             peer_api,
@@ -92,7 +92,7 @@ class Service:
             root_path,
             service_config,
             (private_ca_crt, private_ca_key),
-            (flax_ca_crt, flax_ca_key),
+            (sweety_ca_crt, sweety_ca_key),
             name=f"{service_name}_server",
         )
         f = getattr(node, "set_server", None)
@@ -226,7 +226,7 @@ class Service:
 
         self._log.info("Waiting for socket to be closed (if opened)")
 
-        self._log.info("Waiting for FlaxServer to be closed")
+        self._log.info("Waiting for SweetyServer to be closed")
         await self._server.await_closed()
 
         if self._rpc_close_task:

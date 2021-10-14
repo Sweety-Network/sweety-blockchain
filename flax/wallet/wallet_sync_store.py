@@ -2,9 +2,9 @@ import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.header_block import HeaderBlock
-from flax.util.ints import uint32
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.header_block import HeaderBlock
+from sweety.util.ints import uint32
 
 log = logging.getLogger(__name__)
 

@@ -34,24 +34,24 @@ pip install pyinstaller==4.5
 pip install setuptools_scm
 
 Write-Output "   ---"
-Write-Output "Get FLAX_INSTALLER_VERSION"
-# The environment variable FLAX_INSTALLER_VERSION needs to be defined
-$env:FLAX_INSTALLER_VERSION = python .\build_scripts\installer-version.py -win
+Write-Output "Get SWEETY_INSTALLER_VERSION"
+# The environment variable SWEETY_INSTALLER_VERSION needs to be defined
+$env:SWEETY_INSTALLER_VERSION = python .\build_scripts\installer-version.py -win
 
-if (-not (Test-Path env:FLAX_INSTALLER_VERSION)) {
-  $env:FLAX_INSTALLER_VERSION = '0.0.0'
-  Write-Output "WARNING: No environment variable FLAX_INSTALLER_VERSION set. Using 0.0.0"
+if (-not (Test-Path env:SWEETY_INSTALLER_VERSION)) {
+  $env:SWEETY_INSTALLER_VERSION = '0.0.0'
+  Write-Output "WARNING: No environment variable SWEETY_INSTALLER_VERSION set. Using 0.0.0"
   }
-Write-Output "Flax Version is: $env:FLAX_INSTALLER_VERSION"
+Write-Output "Sweety Version is: $env:SWEETY_INSTALLER_VERSION"
 Write-Output "   ---"
 
 Write-Output "   ---"
-Write-Output "Build flax-blockchain wheels"
+Write-Output "Build sweety-blockchain wheels"
 Write-Output "   ---"
 pip wheel --use-pep517 --extra-index-url https://pypi.chia.net/simple/ -f . --wheel-dir=.\build_scripts\win_build .
 
 Write-Output "   ---"
-Write-Output "Install flax-blockchain wheels into venv with pip"
+Write-Output "Install sweety-blockchain wheels into venv with pip"
 Write-Output "   ---"
 
 Write-Output "pip install miniupnpc"
@@ -60,20 +60,20 @@ pip install --no-index --find-links=.\win_build\ miniupnpc
 # Write-Output "pip install setproctitle"
 # pip install setproctitle==1.2.2
 
-Write-Output "pip install flax-blockchain"
-pip install --no-index --find-links=.\win_build\ flax-blockchain
+Write-Output "pip install sweety-blockchain"
+pip install --no-index --find-links=.\win_build\ sweety-blockchain
 
 Write-Output "   ---"
-Write-Output "Use pyinstaller to create flax .exe's"
+Write-Output "Use pyinstaller to create sweety .exe's"
 Write-Output "   ---"
-$SPEC_FILE = (python -c 'import flax; print(flax.PYINSTALLER_SPEC_PATH)') -join "`n"
+$SPEC_FILE = (python -c 'import sweety; print(sweety.PYINSTALLER_SPEC_PATH)') -join "`n"
 pyinstaller --log-level INFO $SPEC_FILE
 
 Write-Output "   ---"
-Write-Output "Copy flax executables to flax-blockchain-gui\"
+Write-Output "Copy sweety executables to sweety-blockchain-gui\"
 Write-Output "   ---"
-Copy-Item "dist\daemon" -Destination "..\flax-blockchain-gui\" -Recurse
-Set-Location -Path "..\flax-blockchain-gui" -PassThru
+Copy-Item "dist\daemon" -Destination "..\sweety-blockchain-gui\" -Recurse
+Set-Location -Path "..\sweety-blockchain-gui" -PassThru
 
 git status
 
@@ -97,13 +97,13 @@ If ($LastExitCode -gt 0){
 }
 
 Write-Output "   ---"
-Write-Output "Increase the stack for flax command for (flax plots create) chiapos limitations"
+Write-Output "Increase the stack for sweety command for (sweety plots create) chiapos limitations"
 # editbin.exe needs to be in the path
-editbin.exe /STACK:8000000 daemon\flax.exe
+editbin.exe /STACK:8000000 daemon\sweety.exe
 Write-Output "   ---"
 
-$packageVersion = "$env:FLAX_INSTALLER_VERSION"
-$packageName = "Flax-$packageVersion"
+$packageVersion = "$env:SWEETY_INSTALLER_VERSION"
+$packageName = "Sweety-$packageVersion"
 
 Write-Output "packageName is $packageName"
 
@@ -111,14 +111,14 @@ Write-Output "   ---"
 Write-Output "fix version in package.json"
 choco install jq
 cp package.json package.json.orig
-jq --arg VER "$env:FLAX_INSTALLER_VERSION" '.version=$VER' package.json > temp.json
+jq --arg VER "$env:SWEETY_INSTALLER_VERSION" '.version=$VER' package.json > temp.json
 rm package.json
 mv temp.json package.json
 Write-Output "   ---"
 
 Write-Output "   ---"
 Write-Output "electron-packager"
-electron-packager . Flax --asar.unpack="**\daemon\**" --overwrite --icon=.\src\assets\img\flax.ico --app-version=$packageVersion
+electron-packager . Sweety --asar.unpack="**\daemon\**" --overwrite --icon=.\src\assets\img\sweety.ico --app-version=$packageVersion
 Write-Output "   ---"
 
 Write-Output "   ---"
@@ -132,8 +132,8 @@ If ($env:HAS_SECRET) {
    Write-Output "   ---"
    Write-Output "Add timestamp and verify signature"
    Write-Output "   ---"
-   signtool.exe timestamp /v /t http://timestamp.comodoca.com/ .\release-builds\windows-installer\FlaxSetup-$packageVersion.exe
-   signtool.exe verify /v /pa .\release-builds\windows-installer\FlaxSetup-$packageVersion.exe
+   signtool.exe timestamp /v /t http://timestamp.comodoca.com/ .\release-builds\windows-installer\SweetySetup-$packageVersion.exe
+   signtool.exe verify /v /pa .\release-builds\windows-installer\SweetySetup-$packageVersion.exe
    }   Else    {
    Write-Output "Skipping timestamp and verify signatures - no authorization to install certificates"
 }

@@ -8,43 +8,43 @@ from typing import Callable, Dict, List, Optional, Tuple, Set
 from blspy import AugSchemeMPL, G2Element
 from chiabip158 import PyBIP158
 
-import flax.server.ws_connection as ws
-from flax.consensus.block_creation import create_unfinished_block
-from flax.consensus.block_record import BlockRecord
-from flax.consensus.pot_iterations import calculate_ip_iters, calculate_iterations_quality, calculate_sp_iters
-from flax.full_node.bundle_tools import best_solution_generator_from_template, simple_solution_generator
-from flax.full_node.full_node import FullNode
-from flax.full_node.mempool_check_conditions import get_puzzle_and_solution_for_coin
-from flax.full_node.signage_point import SignagePoint
-from flax.protocols import farmer_protocol, full_node_protocol, introducer_protocol, timelord_protocol, wallet_protocol
-from flax.protocols.full_node_protocol import RejectBlock, RejectBlocks
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.protocols.wallet_protocol import (
+import sweety.server.ws_connection as ws
+from sweety.consensus.block_creation import create_unfinished_block
+from sweety.consensus.block_record import BlockRecord
+from sweety.consensus.pot_iterations import calculate_ip_iters, calculate_iterations_quality, calculate_sp_iters
+from sweety.full_node.bundle_tools import best_solution_generator_from_template, simple_solution_generator
+from sweety.full_node.full_node import FullNode
+from sweety.full_node.mempool_check_conditions import get_puzzle_and_solution_for_coin
+from sweety.full_node.signage_point import SignagePoint
+from sweety.protocols import farmer_protocol, full_node_protocol, introducer_protocol, timelord_protocol, wallet_protocol
+from sweety.protocols.full_node_protocol import RejectBlock, RejectBlocks
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.protocols.wallet_protocol import (
     PuzzleSolutionResponse,
     RejectHeaderBlocks,
     RejectHeaderRequest,
     CoinState,
     RespondSESInfo,
 )
-from flax.server.outbound_message import Message, make_msg
-from flax.types.blockchain_format.coin import Coin, hash_coin_list
-from flax.types.blockchain_format.pool_target import PoolTarget
-from flax.types.blockchain_format.program import Program
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.sub_epoch_summary import SubEpochSummary
-from flax.types.coin_record import CoinRecord
-from flax.types.end_of_slot_bundle import EndOfSubSlotBundle
-from flax.types.full_block import FullBlock
-from flax.types.generator_types import BlockGenerator
-from flax.types.mempool_inclusion_status import MempoolInclusionStatus
-from flax.types.mempool_item import MempoolItem
-from flax.types.peer_info import PeerInfo
-from flax.types.unfinished_block import UnfinishedBlock
-from flax.util.api_decorators import api_request, peer_required, bytes_required, execute_task, reply_type
-from flax.util.generator_tools import get_block_header
-from flax.util.hash import std_hash
-from flax.util.ints import uint8, uint32, uint64, uint128
-from flax.util.merkle_set import MerkleSet
+from sweety.server.outbound_message import Message, make_msg
+from sweety.types.blockchain_format.coin import Coin, hash_coin_list
+from sweety.types.blockchain_format.pool_target import PoolTarget
+from sweety.types.blockchain_format.program import Program
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.sub_epoch_summary import SubEpochSummary
+from sweety.types.coin_record import CoinRecord
+from sweety.types.end_of_slot_bundle import EndOfSubSlotBundle
+from sweety.types.full_block import FullBlock
+from sweety.types.generator_types import BlockGenerator
+from sweety.types.mempool_inclusion_status import MempoolInclusionStatus
+from sweety.types.mempool_item import MempoolItem
+from sweety.types.peer_info import PeerInfo
+from sweety.types.unfinished_block import UnfinishedBlock
+from sweety.util.api_decorators import api_request, peer_required, bytes_required, execute_task, reply_type
+from sweety.util.generator_tools import get_block_header
+from sweety.util.hash import std_hash
+from sweety.util.ints import uint8, uint32, uint64, uint128
+from sweety.util.merkle_set import MerkleSet
 
 
 class FullNodeAPI:
@@ -71,7 +71,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     @reply_type([ProtocolMessageTypes.respond_peers])
-    async def request_peers(self, _request: full_node_protocol.RequestPeers, peer: ws.WSFlaxConnection):
+    async def request_peers(self, _request: full_node_protocol.RequestPeers, peer: ws.WSSweetyConnection):
         if peer.peer_server_port is None:
             return None
         peer_info = PeerInfo(peer.peer_host, peer.peer_server_port)
@@ -82,7 +82,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def respond_peers(
-        self, request: full_node_protocol.RespondPeers, peer: ws.WSFlaxConnection
+        self, request: full_node_protocol.RespondPeers, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         self.log.debug(f"Received {len(request.peer_list)} peers")
         if self.full_node.full_node_peers is not None:
@@ -92,7 +92,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def respond_peers_introducer(
-        self, request: introducer_protocol.RespondPeersIntroducer, peer: ws.WSFlaxConnection
+        self, request: introducer_protocol.RespondPeersIntroducer, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         self.log.debug(f"Received {len(request.peer_list)} peers from introducer")
         if self.full_node.full_node_peers is not None:
@@ -104,7 +104,7 @@ class FullNodeAPI:
     @execute_task
     @peer_required
     @api_request
-    async def new_peak(self, request: full_node_protocol.NewPeak, peer: ws.WSFlaxConnection) -> Optional[Message]:
+    async def new_peak(self, request: full_node_protocol.NewPeak, peer: ws.WSSweetyConnection) -> Optional[Message]:
         """
         A peer notifies us that they have added a new peak to their blockchain. If we don't have it,
         we can ask for it.
@@ -117,7 +117,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def new_transaction(
-        self, transaction: full_node_protocol.NewTransaction, peer: ws.WSFlaxConnection
+        self, transaction: full_node_protocol.NewTransaction, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         """
         A peer notifies us of a new transaction.
@@ -219,7 +219,7 @@ class FullNodeAPI:
     async def respond_transaction(
         self,
         tx: full_node_protocol.RespondTransaction,
-        peer: ws.WSFlaxConnection,
+        peer: ws.WSSweetyConnection,
         tx_bytes: bytes = b"",
         test: bool = False,
     ) -> Optional[Message]:
@@ -370,7 +370,7 @@ class FullNodeAPI:
     async def respond_block(
         self,
         respond_block: full_node_protocol.RespondBlock,
-        peer: ws.WSFlaxConnection,
+        peer: ws.WSSweetyConnection,
     ) -> Optional[Message]:
         """
         Receive a full block from a peer full node (or ourselves).
@@ -432,7 +432,7 @@ class FullNodeAPI:
     async def respond_unfinished_block(
         self,
         respond_unfinished_block: full_node_protocol.RespondUnfinishedBlock,
-        peer: ws.WSFlaxConnection,
+        peer: ws.WSSweetyConnection,
     ) -> Optional[Message]:
         if self.full_node.sync_store.get_sync_mode():
             return None
@@ -442,7 +442,7 @@ class FullNodeAPI:
     @api_request
     @peer_required
     async def new_signage_point_or_end_of_sub_slot(
-        self, new_sp: full_node_protocol.NewSignagePointOrEndOfSubSlot, peer: ws.WSFlaxConnection
+        self, new_sp: full_node_protocol.NewSignagePointOrEndOfSubSlot, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         # Ignore if syncing
         if self.full_node.sync_store.get_sync_mode():
@@ -569,7 +569,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def respond_signage_point(
-        self, request: full_node_protocol.RespondSignagePoint, peer: ws.WSFlaxConnection
+        self, request: full_node_protocol.RespondSignagePoint, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         if self.full_node.sync_store.get_sync_mode():
             return None
@@ -625,7 +625,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def respond_end_of_sub_slot(
-        self, request: full_node_protocol.RespondEndOfSubSlot, peer: ws.WSFlaxConnection
+        self, request: full_node_protocol.RespondEndOfSubSlot, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         if self.full_node.sync_store.get_sync_mode():
             return None
@@ -637,7 +637,7 @@ class FullNodeAPI:
     async def request_mempool_transactions(
         self,
         request: full_node_protocol.RequestMempoolTransactions,
-        peer: ws.WSFlaxConnection,
+        peer: ws.WSSweetyConnection,
     ) -> Optional[Message]:
         received_filter = PyBIP158(bytearray(request.filter))
 
@@ -653,7 +653,7 @@ class FullNodeAPI:
     @api_request
     @peer_required
     async def declare_proof_of_space(
-        self, request: farmer_protocol.DeclareProofOfSpace, peer: ws.WSFlaxConnection
+        self, request: farmer_protocol.DeclareProofOfSpace, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         """
         Creates a block body and header, with the proof of space, coinbase, and fee targets provided
@@ -942,7 +942,7 @@ class FullNodeAPI:
     @api_request
     @peer_required
     async def signed_values(
-        self, farmer_request: farmer_protocol.SignedValues, peer: ws.WSFlaxConnection
+        self, farmer_request: farmer_protocol.SignedValues, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         """
         Signature of header hash, by the harvester. This is enough to create an unfinished
@@ -1007,7 +1007,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def new_infusion_point_vdf(
-        self, request: timelord_protocol.NewInfusionPointVDF, peer: ws.WSFlaxConnection
+        self, request: timelord_protocol.NewInfusionPointVDF, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         if self.full_node.sync_store.get_sync_mode():
             return None
@@ -1018,7 +1018,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def new_signage_point_vdf(
-        self, request: timelord_protocol.NewSignagePointVDF, peer: ws.WSFlaxConnection
+        self, request: timelord_protocol.NewSignagePointVDF, peer: ws.WSSweetyConnection
     ) -> None:
         if self.full_node.sync_store.get_sync_mode():
             return None
@@ -1035,7 +1035,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def new_end_of_sub_slot_vdf(
-        self, request: timelord_protocol.NewEndOfSubSlotVDF, peer: ws.WSFlaxConnection
+        self, request: timelord_protocol.NewEndOfSubSlotVDF, peer: ws.WSSweetyConnection
     ) -> Optional[Message]:
         if self.full_node.sync_store.get_sync_mode():
             return None
@@ -1291,7 +1291,7 @@ class FullNodeAPI:
     @api_request
     @bytes_required
     async def new_compact_vdf(
-        self, request: full_node_protocol.NewCompactVDF, peer: ws.WSFlaxConnection, request_bytes: bytes = b""
+        self, request: full_node_protocol.NewCompactVDF, peer: ws.WSSweetyConnection, request_bytes: bytes = b""
     ):
         if self.full_node.sync_store.get_sync_mode():
             return None
@@ -1317,14 +1317,14 @@ class FullNodeAPI:
     @peer_required
     @api_request
     @reply_type([ProtocolMessageTypes.respond_compact_vdf])
-    async def request_compact_vdf(self, request: full_node_protocol.RequestCompactVDF, peer: ws.WSFlaxConnection):
+    async def request_compact_vdf(self, request: full_node_protocol.RequestCompactVDF, peer: ws.WSSweetyConnection):
         if self.full_node.sync_store.get_sync_mode():
             return None
         await self.full_node.request_compact_vdf(request, peer)
 
     @peer_required
     @api_request
-    async def respond_compact_vdf(self, request: full_node_protocol.RespondCompactVDF, peer: ws.WSFlaxConnection):
+    async def respond_compact_vdf(self, request: full_node_protocol.RespondCompactVDF, peer: ws.WSSweetyConnection):
         if self.full_node.sync_store.get_sync_mode():
             return None
         await self.full_node.respond_compact_vdf(request, peer)
@@ -1332,7 +1332,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def register_interest_in_puzzle_hash(
-        self, request: wallet_protocol.RegisterForPhUpdates, peer: ws.WSFlaxConnection
+        self, request: wallet_protocol.RegisterForPhUpdates, peer: ws.WSSweetyConnection
     ):
         if peer.peer_node_id not in self.full_node.peer_puzzle_hash:
             self.full_node.peer_puzzle_hash[peer.peer_node_id] = set()
@@ -1373,7 +1373,7 @@ class FullNodeAPI:
     @peer_required
     @api_request
     async def register_interest_in_coin(
-        self, request: wallet_protocol.RegisterForCoinUpdates, peer: ws.WSFlaxConnection
+        self, request: wallet_protocol.RegisterForCoinUpdates, peer: ws.WSSweetyConnection
     ):
         if peer.peer_node_id not in self.full_node.peer_coin_ids:
             self.full_node.peer_coin_ids[peer.peer_node_id] = set()

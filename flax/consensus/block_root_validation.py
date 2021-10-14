@@ -1,9 +1,9 @@
 from typing import Dict, List, Optional
 
-from flax.types.blockchain_format.coin import Coin, hash_coin_list
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.errors import Err
-from flax.util.merkle_set import MerkleSet
+from sweety.types.blockchain_format.coin import Coin, hash_coin_list
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.errors import Err
+from sweety.util.merkle_set import MerkleSet
 
 
 def validate_block_merkle_roots(

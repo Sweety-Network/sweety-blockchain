@@ -1,7 +1,7 @@
 from typing import List, Tuple
 import aiosqlite
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.db_wrapper import DBWrapper
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.db_wrapper import DBWrapper
 import logging
 
 log = logging.getLogger(__name__)

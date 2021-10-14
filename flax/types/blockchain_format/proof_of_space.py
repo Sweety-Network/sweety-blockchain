@@ -6,11 +6,11 @@ from bitstring import BitArray
 from blspy import G1Element, AugSchemeMPL, PrivateKey
 from chiapos import Verifier
 
-from flax.consensus.constants import ConsensusConstants
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.hash import std_hash
-from flax.util.ints import uint8
-from flax.util.streamable import Streamable, streamable
+from sweety.consensus.constants import ConsensusConstants
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.hash import std_hash
+from sweety.util.ints import uint8
+from sweety.util.streamable import Streamable, streamable
 
 log = logging.getLogger(__name__)
 

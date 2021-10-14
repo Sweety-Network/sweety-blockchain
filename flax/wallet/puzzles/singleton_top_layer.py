@@ -1,14 +1,14 @@
 from typing import List, Tuple, Optional
 
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.program import Program
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.coin_spend import CoinSpend
-from flax.wallet.puzzles.load_clvm import load_clvm
-from flax.wallet.lineage_proof import LineageProof
-from flax.util.ints import uint64
-from flax.util.hash import std_hash
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.program import Program
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.coin_spend import CoinSpend
+from sweety.wallet.puzzles.load_clvm import load_clvm
+from sweety.wallet.lineage_proof import LineageProof
+from sweety.util.ints import uint64
+from sweety.util.hash import std_hash
 
 SINGLETON_MOD = load_clvm("singleton_top_layer.clvm")
 SINGLETON_MOD_HASH = SINGLETON_MOD.get_tree_hash()

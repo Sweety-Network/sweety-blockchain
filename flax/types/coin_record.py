@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from flax.protocols.wallet_protocol import CoinState
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.ints import uint32, uint64
-from flax.util.streamable import Streamable, streamable
+from sweety.protocols.wallet_protocol import CoinState
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.ints import uint32, uint64
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

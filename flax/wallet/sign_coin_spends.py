@@ -4,9 +4,9 @@ from typing import List, Any
 import blspy
 from blspy import AugSchemeMPL
 
-from flax.types.coin_spend import CoinSpend
-from flax.types.spend_bundle import SpendBundle
-from flax.util.condition_tools import conditions_dict_for_solution, pkm_pairs_for_conditions_dict
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.condition_tools import conditions_dict_for_solution, pkm_pairs_for_conditions_dict
 
 
 async def sign_coin_spends(

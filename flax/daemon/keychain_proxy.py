@@ -2,24 +2,24 @@ import logging
 import ssl
 
 from blspy import AugSchemeMPL, PrivateKey
-from flax.cmds.init_funcs import check_keys
-from flax.daemon.client import DaemonProxy
-from flax.daemon.keychain_server import (
+from sweety.cmds.init_funcs import check_keys
+from sweety.daemon.client import DaemonProxy
+from sweety.daemon.keychain_server import (
     KEYCHAIN_ERR_KEYERROR,
     KEYCHAIN_ERR_LOCKED,
     KEYCHAIN_ERR_MALFORMED_REQUEST,
     KEYCHAIN_ERR_NO_KEYS,
 )
-from flax.server.server import ssl_context_for_client
-from flax.util.config import load_config
-from flax.util.keychain import (
+from sweety.server.server import ssl_context_for_client
+from sweety.util.config import load_config
+from sweety.util.keychain import (
     Keychain,
     KeyringIsLocked,
     bytes_to_mnemonic,
     mnemonic_to_seed,
     supports_keyring_passphrase,
 )
-from flax.util.ws_message import WsRpcMessage
+from sweety.util.ws_message import WsRpcMessage
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 

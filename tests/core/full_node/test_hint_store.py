@@ -3,12 +3,12 @@ import logging
 import pytest
 from clvm.casts import int_to_bytes
 
-from flax.consensus.blockchain import Blockchain
-from flax.full_node.hint_store import HintStore
-from flax.types.blockchain_format.coin import Coin
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.condition_with_args import ConditionWithArgs
-from flax.types.spend_bundle import SpendBundle
+from sweety.consensus.blockchain import Blockchain
+from sweety.full_node.hint_store import HintStore
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.condition_with_args import ConditionWithArgs
+from sweety.types.spend_bundle import SpendBundle
 from tests.core.full_node.test_coin_store import DBConnection
 from tests.wallet_tools import WalletTool
 from tests.setup_nodes import bt

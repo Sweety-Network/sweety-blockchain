@@ -7,23 +7,23 @@ import aiosqlite
 import pytest
 import tempfile
 
-from flax.consensus.block_rewards import calculate_base_farmer_reward, calculate_pool_reward
-from flax.consensus.blockchain import Blockchain, ReceiveBlockResult
-from flax.consensus.coinbase import create_farmer_coin, create_pool_coin
-from flax.full_node.block_store import BlockStore
-from flax.full_node.coin_store import CoinStore
-from flax.full_node.hint_store import HintStore
-from flax.full_node.mempool_check_conditions import get_name_puzzle_conditions
-from flax.types.blockchain_format.coin import Coin
-from flax.types.coin_record import CoinRecord
-from flax.types.full_block import FullBlock
-from flax.types.generator_types import BlockGenerator
-from flax.util.generator_tools import tx_removals_and_additions
-from flax.util.ints import uint64, uint32
+from sweety.consensus.block_rewards import calculate_base_farmer_reward, calculate_pool_reward
+from sweety.consensus.blockchain import Blockchain, ReceiveBlockResult
+from sweety.consensus.coinbase import create_farmer_coin, create_pool_coin
+from sweety.full_node.block_store import BlockStore
+from sweety.full_node.coin_store import CoinStore
+from sweety.full_node.hint_store import HintStore
+from sweety.full_node.mempool_check_conditions import get_name_puzzle_conditions
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.coin_record import CoinRecord
+from sweety.types.full_block import FullBlock
+from sweety.types.generator_types import BlockGenerator
+from sweety.util.generator_tools import tx_removals_and_additions
+from sweety.util.ints import uint64, uint32
 from tests.wallet_tools import WalletTool
-from flax.util.db_wrapper import DBWrapper
+from sweety.util.db_wrapper import DBWrapper
 from tests.setup_nodes import bt, test_constants
-from flax.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.sized_bytes import bytes32
 
 
 @pytest.fixture(scope="module")

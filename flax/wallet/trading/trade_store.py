@@ -2,13 +2,13 @@ from typing import List, Optional
 
 import aiosqlite
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.mempool_inclusion_status import MempoolInclusionStatus
-from flax.util.db_wrapper import DBWrapper
-from flax.util.errors import Err
-from flax.util.ints import uint8, uint32
-from flax.wallet.trade_record import TradeRecord
-from flax.wallet.trading.trade_status import TradeStatus
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.mempool_inclusion_status import MempoolInclusionStatus
+from sweety.util.db_wrapper import DBWrapper
+from sweety.util.errors import Err
+from sweety.util.ints import uint8, uint32
+from sweety.wallet.trade_record import TradeRecord
+from sweety.wallet.trading.trade_status import TradeStatus
 
 
 class TradeStore:

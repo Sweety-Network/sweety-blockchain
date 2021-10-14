@@ -1,8 +1,8 @@
 from typing import Tuple
 
-from flax.consensus.block_record import BlockRecord
-from flax.consensus.blockchain_interface import BlockchainInterface
-from flax.util.ints import uint128
+from sweety.consensus.block_record import BlockRecord
+from sweety.consensus.blockchain_interface import BlockchainInterface
+from sweety.util.ints import uint128
 
 
 def get_prev_transaction_block(

@@ -5,31 +5,31 @@ from typing import Optional, Tuple
 
 from blspy import AugSchemeMPL
 
-from flax.consensus.block_record import BlockRecord
-from flax.consensus.blockchain_interface import BlockchainInterface
-from flax.consensus.constants import ConsensusConstants
-from flax.consensus.deficit import calculate_deficit
-from flax.consensus.difficulty_adjustment import can_finish_sub_and_full_epoch
-from flax.consensus.get_block_challenge import final_eos_is_already_included, get_block_challenge
-from flax.consensus.make_sub_epoch_summary import make_sub_epoch_summary
-from flax.consensus.pot_iterations import (
+from sweety.consensus.block_record import BlockRecord
+from sweety.consensus.blockchain_interface import BlockchainInterface
+from sweety.consensus.constants import ConsensusConstants
+from sweety.consensus.deficit import calculate_deficit
+from sweety.consensus.difficulty_adjustment import can_finish_sub_and_full_epoch
+from sweety.consensus.get_block_challenge import final_eos_is_already_included, get_block_challenge
+from sweety.consensus.make_sub_epoch_summary import make_sub_epoch_summary
+from sweety.consensus.pot_iterations import (
     calculate_ip_iters,
     calculate_iterations_quality,
     calculate_sp_interval_iters,
     calculate_sp_iters,
     is_overflow_block,
 )
-from flax.consensus.vdf_info_computation import get_signage_point_vdf_info
-from flax.types.blockchain_format.classgroup import ClassgroupElement
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.slots import ChallengeChainSubSlot, RewardChainSubSlot, SubSlotProofs
-from flax.types.blockchain_format.vdf import VDFInfo, VDFProof
-from flax.types.end_of_slot_bundle import EndOfSubSlotBundle
-from flax.types.header_block import HeaderBlock
-from flax.types.unfinished_header_block import UnfinishedHeaderBlock
-from flax.util.errors import Err, ValidationError
-from flax.util.hash import std_hash
-from flax.util.ints import uint8, uint32, uint64, uint128
+from sweety.consensus.vdf_info_computation import get_signage_point_vdf_info
+from sweety.types.blockchain_format.classgroup import ClassgroupElement
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.slots import ChallengeChainSubSlot, RewardChainSubSlot, SubSlotProofs
+from sweety.types.blockchain_format.vdf import VDFInfo, VDFProof
+from sweety.types.end_of_slot_bundle import EndOfSubSlotBundle
+from sweety.types.header_block import HeaderBlock
+from sweety.types.unfinished_header_block import UnfinishedHeaderBlock
+from sweety.util.errors import Err, ValidationError
+from sweety.util.hash import std_hash
+from sweety.util.ints import uint8, uint32, uint64, uint128
 
 log = logging.getLogger(__name__)
 

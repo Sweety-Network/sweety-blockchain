@@ -1,19 +1,19 @@
 from typing import KeysView, Generator
 
 SERVICES_FOR_GROUP = {
-    "all": "flax_harvester flax_timelord_launcher flax_timelord flax_farmer flax_full_node flax_wallet".split(),
-    "node": "flax_full_node".split(),
-    "harvester": "flax_harvester".split(),
-    "farmer": "flax_harvester flax_farmer flax_full_node flax_wallet".split(),
-    "farmer-no-wallet": "flax_harvester flax_farmer flax_full_node".split(),
-    "farmer-only": "flax_farmer".split(),
-    "timelord": "flax_timelord_launcher flax_timelord flax_full_node".split(),
-    "timelord-only": "flax_timelord".split(),
-    "timelord-launcher-only": "flax_timelord_launcher".split(),
-    "wallet": "flax_wallet flax_full_node".split(),
-    "wallet-only": "flax_wallet".split(),
-    "introducer": "flax_introducer".split(),
-    "simulator": "flax_full_node_simulator".split(),
+    "all": "sweety_harvester sweety_timelord_launcher sweety_timelord sweety_farmer sweety_full_node sweety_wallet".split(),
+    "node": "sweety_full_node".split(),
+    "harvester": "sweety_harvester".split(),
+    "farmer": "sweety_harvester sweety_farmer sweety_full_node sweety_wallet".split(),
+    "farmer-no-wallet": "sweety_harvester sweety_farmer sweety_full_node".split(),
+    "farmer-only": "sweety_farmer".split(),
+    "timelord": "sweety_timelord_launcher sweety_timelord sweety_full_node".split(),
+    "timelord-only": "sweety_timelord".split(),
+    "timelord-launcher-only": "sweety_timelord_launcher".split(),
+    "wallet": "sweety_wallet sweety_full_node".split(),
+    "wallet-only": "sweety_wallet".split(),
+    "introducer": "sweety_introducer".split(),
+    "simulator": "sweety_full_node_simulator".split(),
 }
 
 

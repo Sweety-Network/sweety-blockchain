@@ -18,9 +18,9 @@ fi
 if [ "$(uname -m)" = "armv7l" ]; then
   echo ""
 	echo "WARNING:"
-	echo "The Flax Blockchain requires a 64 bit OS and this is 32 bit armv7l"
+	echo "The Sweety Blockchain requires a 64 bit OS and this is 32 bit armv7l"
 	echo "For more information, see"
-	echo "https://github.com/Flax-Network/flax-blockchain/wiki/Raspberry-Pi"
+	echo "https://github.com/Sweety-Network/sweety-blockchain/wiki/Raspberry-Pi"
 	echo "Exiting."
 	exit 1
 fi
@@ -120,13 +120,13 @@ python -m pip install --extra-index-url https://pypi.chia.net/simple/ miniupnpc=
 python -m pip install -e . --extra-index-url https://pypi.chia.net/simple/
 
 echo ""
-echo "Flax blockchain install.sh complete."
+echo "Sweety blockchain install.sh complete."
 echo "For assistance join us on Discord in the #support chat channel:"
 echo "https://discord.gg/yEWaF6CQcA"
 echo ""
-echo "Try the Quick Start Guide to running flax-blockchain:"
-echo "https://github.com/Flax-Network/flax-blockchain/wiki/Quick-Start-Guide"
+echo "Try the Quick Start Guide to running sweety-blockchain:"
+echo "https://github.com/Sweety-Network/sweety-blockchain/wiki/Quick-Start-Guide"
 echo ""
 echo "To install the GUI type 'sh install-gui.sh' after '. ./activate'."
 echo ""
-echo "Type '. ./activate' and then 'flax init' to begin."
+echo "Type '. ./activate' and then 'sweety init' to begin."

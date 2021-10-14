@@ -2,8 +2,8 @@ import functools
 from typing import List, Optional
 
 from blspy import AugSchemeMPL, G1Element, G2Element, GTElement
-from flax.util.hash import std_hash
-from flax.util.lru_cache import LRUCache
+from sweety.util.hash import std_hash
+from sweety.util.lru_cache import LRUCache
 
 
 def get_pairings(cache: LRUCache, pks: List[G1Element], msgs: List[bytes], force_cache: bool) -> List[GTElement]:

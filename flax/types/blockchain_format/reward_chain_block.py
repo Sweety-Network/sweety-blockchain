@@ -3,11 +3,11 @@ from typing import Optional
 
 from blspy import G2Element
 
-from flax.types.blockchain_format.proof_of_space import ProofOfSpace
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.vdf import VDFInfo
-from flax.util.ints import uint8, uint32, uint128
-from flax.util.streamable import Streamable, streamable
+from sweety.types.blockchain_format.proof_of_space import ProofOfSpace
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.vdf import VDFInfo
+from sweety.util.ints import uint8, uint32, uint128
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

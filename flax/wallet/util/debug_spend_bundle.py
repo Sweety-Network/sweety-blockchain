@@ -4,13 +4,13 @@ from blspy import AugSchemeMPL
 from clvm import KEYWORD_FROM_ATOM
 from clvm_tools.binutils import disassemble as bu_disassemble
 
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.program import Program, INFINITE_COST
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.consensus.default_constants import DEFAULT_CONSTANTS
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.util.condition_tools import conditions_dict_for_solution, pkm_pairs_for_conditions_dict
-from flax.util.hash import std_hash
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.program import Program, INFINITE_COST
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.consensus.default_constants import DEFAULT_CONSTANTS
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.util.condition_tools import conditions_dict_for_solution, pkm_pairs_for_conditions_dict
+from sweety.util.hash import std_hash
 
 CONDITIONS = dict((k, bytes(v)[0]) for k, v in ConditionOpcode.__members__.items())  # pylint: disable=E1101
 KFA = {v: k for k, v in CONDITIONS.items()}

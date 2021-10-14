@@ -1,12 +1,12 @@
 from typing import Dict, Optional, Tuple
 
-from flax.types.blockchain_format.program import Program, INFINITE_COST
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.spend_bundle import SpendBundle
-from flax.util.condition_tools import conditions_dict_for_solution
-from flax.wallet.cc_wallet import cc_utils
-from flax.wallet.trade_record import TradeRecord
-from flax.wallet.trading.trade_status import TradeStatus
+from sweety.types.blockchain_format.program import Program, INFINITE_COST
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.condition_tools import conditions_dict_for_solution
+from sweety.wallet.cc_wallet import cc_utils
+from sweety.wallet.trade_record import TradeRecord
+from sweety.wallet.trading.trade_status import TradeStatus
 
 
 def trade_status_ui_string(status: TradeStatus):
@@ -83,10 +83,10 @@ def get_discrepancies_for_spend_bundle(
                 coin_amount = coinsol.coin.amount
                 out_amount = get_output_amount_for_puzzle_and_solution(puzzle, solution)
                 diff = coin_amount - out_amount
-                if "flax" in cc_discrepancies:
-                    cc_discrepancies["flax"] = cc_discrepancies["flax"] + diff
+                if "sweety" in cc_discrepancies:
+                    cc_discrepancies["sweety"] = cc_discrepancies["sweety"] + diff
                 else:
-                    cc_discrepancies["flax"] = diff
+                    cc_discrepancies["sweety"] = diff
 
         return True, cc_discrepancies, None
     except Exception as e:

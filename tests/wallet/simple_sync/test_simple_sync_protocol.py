@@ -6,22 +6,22 @@ import pytest
 from clvm.casts import int_to_bytes
 from colorlog import logging
 
-from flax.consensus.block_rewards import calculate_pool_reward, calculate_base_farmer_reward
-from flax.protocols import wallet_protocol, full_node_protocol
-from flax.protocols.full_node_protocol import RespondTransaction
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.protocols.wallet_protocol import RespondToCoinUpdates, CoinStateUpdate, RespondToPhUpdates, CoinState
-from flax.server.outbound_message import NodeType
-from flax.simulator.simulator_protocol import FarmNewBlockProtocol, ReorgProtocol
-from flax.types.blockchain_format.coin import Coin
-from flax.types.coin_record import CoinRecord
-from flax.types.condition_opcodes import ConditionOpcode
-from flax.types.condition_with_args import ConditionWithArgs
-from flax.types.peer_info import PeerInfo
-from flax.types.spend_bundle import SpendBundle
-from flax.util.ints import uint16, uint32, uint64
-from flax.wallet.wallet import Wallet
-from flax.wallet.wallet_state_manager import WalletStateManager
+from sweety.consensus.block_rewards import calculate_pool_reward, calculate_base_farmer_reward
+from sweety.protocols import wallet_protocol, full_node_protocol
+from sweety.protocols.full_node_protocol import RespondTransaction
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.protocols.wallet_protocol import RespondToCoinUpdates, CoinStateUpdate, RespondToPhUpdates, CoinState
+from sweety.server.outbound_message import NodeType
+from sweety.simulator.simulator_protocol import FarmNewBlockProtocol, ReorgProtocol
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.coin_record import CoinRecord
+from sweety.types.condition_opcodes import ConditionOpcode
+from sweety.types.condition_with_args import ConditionWithArgs
+from sweety.types.peer_info import PeerInfo
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.ints import uint16, uint32, uint64
+from sweety.wallet.wallet import Wallet
+from sweety.wallet.wallet_state_manager import WalletStateManager
 from tests.connection_utils import add_dummy_connection
 from tests.setup_nodes import self_hostname, setup_simulators_and_wallets, bt
 from tests.time_out_assert import time_out_assert

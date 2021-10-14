@@ -4,26 +4,26 @@ from typing import Any, Dict, List, Optional, Set
 
 from blspy import G1Element
 
-from flax.consensus.cost_calculator import calculate_cost_of_program, NPCResult
-from flax.full_node.bundle_tools import simple_solution_generator
-from flax.full_node.mempool_check_conditions import get_name_puzzle_conditions
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.program import Program, SerializedProgram
-from flax.types.announcement import Announcement
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.coin_spend import CoinSpend
-from flax.types.generator_types import BlockGenerator
-from flax.types.spend_bundle import SpendBundle
-from flax.util.ints import uint8, uint32, uint64, uint128
-from flax.util.hash import std_hash
-from flax.wallet.derivation_record import DerivationRecord
-from flax.wallet.puzzles.p2_delegated_puzzle_or_hidden_puzzle import (
+from sweety.consensus.cost_calculator import calculate_cost_of_program, NPCResult
+from sweety.full_node.bundle_tools import simple_solution_generator
+from sweety.full_node.mempool_check_conditions import get_name_puzzle_conditions
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.program import Program, SerializedProgram
+from sweety.types.announcement import Announcement
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.generator_types import BlockGenerator
+from sweety.types.spend_bundle import SpendBundle
+from sweety.util.ints import uint8, uint32, uint64, uint128
+from sweety.util.hash import std_hash
+from sweety.wallet.derivation_record import DerivationRecord
+from sweety.wallet.puzzles.p2_delegated_puzzle_or_hidden_puzzle import (
     DEFAULT_HIDDEN_PUZZLE_HASH,
     calculate_synthetic_secret_key,
     puzzle_for_pk,
     solution_for_conditions,
 )
-from flax.wallet.puzzles.puzzle_utils import (
+from sweety.wallet.puzzles.puzzle_utils import (
     make_assert_coin_announcement,
     make_assert_puzzle_announcement,
     make_assert_my_coin_id_condition,
@@ -33,13 +33,13 @@ from flax.wallet.puzzles.puzzle_utils import (
     make_create_coin_condition,
     make_reserve_fee_condition,
 )
-from flax.wallet.secret_key_store import SecretKeyStore
-from flax.wallet.sign_coin_spends import sign_coin_spends
-from flax.wallet.transaction_record import TransactionRecord
-from flax.wallet.util.transaction_type import TransactionType
-from flax.wallet.util.wallet_types import WalletType
-from flax.wallet.wallet_coin_record import WalletCoinRecord
-from flax.wallet.wallet_info import WalletInfo
+from sweety.wallet.secret_key_store import SecretKeyStore
+from sweety.wallet.sign_coin_spends import sign_coin_spends
+from sweety.wallet.transaction_record import TransactionRecord
+from sweety.wallet.util.transaction_type import TransactionType
+from sweety.wallet.util.wallet_types import WalletType
+from sweety.wallet.wallet_coin_record import WalletCoinRecord
+from sweety.wallet.wallet_info import WalletInfo
 
 
 class Wallet:
@@ -437,14 +437,14 @@ class Wallet:
         await self.wallet_state_manager.add_pending_transaction(tx)
 
     # This is to be aggregated together with a coloured coin offer to ensure that the trade happens
-    async def create_spend_bundle_relative_flax(self, flax_amount: int, exclude: List[Coin]) -> SpendBundle:
+    async def create_spend_bundle_relative_sweety(self, sweety_amount: int, exclude: List[Coin]) -> SpendBundle:
         list_of_solutions = []
         utxos = None
 
         # If we're losing value then get coins with at least that much value
         # If we're gaining value then our amount doesn't matter
-        if flax_amount < 0:
-            utxos = await self.select_coins(abs(flax_amount), exclude)
+        if sweety_amount < 0:
+            utxos = await self.select_coins(abs(sweety_amount), exclude)
         else:
             utxos = await self.select_coins(0, exclude)
 
@@ -452,7 +452,7 @@ class Wallet:
 
         # Calculate output amount given sum of utxos
         spend_value = sum([coin.amount for coin in utxos])
-        flax_amount = spend_value + flax_amount
+        sweety_amount = spend_value + sweety_amount
 
         # Create coin solutions for each utxo
         output_created = None
@@ -460,7 +460,7 @@ class Wallet:
             puzzle = await self.puzzle_for_puzzle_hash(coin.puzzle_hash)
             if output_created is None:
                 newpuzhash = await self.get_new_puzzlehash()
-                primaries = [{"puzzlehash": newpuzhash, "amount": flax_amount}]
+                primaries = [{"puzzlehash": newpuzhash, "amount": sweety_amount}]
                 solution = self.make_solution(primaries=primaries)
                 output_created = coin
             list_of_solutions.append(CoinSpend(coin, puzzle, solution))

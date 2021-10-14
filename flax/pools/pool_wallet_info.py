@@ -4,13 +4,13 @@ from typing import Optional, Dict
 
 from blspy import G1Element
 
-from flax.protocols.pool_protocol import POOL_PROTOCOL_VERSION
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.program import Program
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.byte_types import hexstr_to_bytes
-from flax.util.ints import uint32, uint8
-from flax.util.streamable import streamable, Streamable
+from sweety.protocols.pool_protocol import POOL_PROTOCOL_VERSION
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.program import Program
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.byte_types import hexstr_to_bytes
+from sweety.util.ints import uint32, uint8
+from sweety.util.streamable import streamable, Streamable
 
 
 class PoolSingletonState(IntEnum):

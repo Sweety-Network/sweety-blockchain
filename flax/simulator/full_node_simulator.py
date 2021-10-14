@@ -1,12 +1,12 @@
 from typing import List, Optional
 
-from flax.consensus.block_record import BlockRecord
-from flax.full_node.full_node_api import FullNodeAPI
-from flax.protocols.full_node_protocol import RespondBlock
-from flax.simulator.simulator_protocol import FarmNewBlockProtocol, ReorgProtocol
-from flax.types.full_block import FullBlock
-from flax.util.api_decorators import api_request
-from flax.util.ints import uint8
+from sweety.consensus.block_record import BlockRecord
+from sweety.full_node.full_node_api import FullNodeAPI
+from sweety.protocols.full_node_protocol import RespondBlock
+from sweety.simulator.simulator_protocol import FarmNewBlockProtocol, ReorgProtocol
+from sweety.types.full_block import FullBlock
+from sweety.util.api_decorators import api_request
+from sweety.util.ints import uint8
 
 
 class FullNodeSimulator(FullNodeAPI):

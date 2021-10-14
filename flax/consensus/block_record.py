@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from flax.consensus.constants import ConsensusConstants
-from flax.consensus.pot_iterations import calculate_ip_iters, calculate_sp_iters
-from flax.types.blockchain_format.classgroup import ClassgroupElement
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.sub_epoch_summary import SubEpochSummary
-from flax.util.ints import uint8, uint32, uint64, uint128
-from flax.util.streamable import Streamable, streamable
+from sweety.consensus.constants import ConsensusConstants
+from sweety.consensus.pot_iterations import calculate_ip_iters, calculate_sp_iters
+from sweety.types.blockchain_format.classgroup import ClassgroupElement
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.sub_epoch_summary import SubEpochSummary
+from sweety.util.ints import uint8, uint32, uint64, uint128
+from sweety.util.streamable import Streamable, streamable
 
 
 @dataclass(frozen=True)

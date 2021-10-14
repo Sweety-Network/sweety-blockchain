@@ -4,9 +4,9 @@ from typing import Any, Optional, Set, Tuple, List, Dict
 
 from blspy import PrivateKey, G2Element, G1Element
 
-from flax.consensus.block_record import BlockRecord
-from flax.pools.pool_config import PoolWalletConfig, load_pool_config, update_pool_config
-from flax.pools.pool_wallet_info import (
+from sweety.consensus.block_record import BlockRecord
+from sweety.pools.pool_config import PoolWalletConfig, load_pool_config, update_pool_config
+from sweety.pools.pool_wallet_info import (
     PoolWalletInfo,
     PoolSingletonState,
     PoolState,
@@ -15,17 +15,17 @@ from flax.pools.pool_wallet_info import (
     LEAVING_POOL,
     create_pool_state,
 )
-from flax.protocols.pool_protocol import POOL_PROTOCOL_VERSION
+from sweety.protocols.pool_protocol import POOL_PROTOCOL_VERSION
 
-from flax.types.announcement import Announcement
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.program import Program, SerializedProgram
-from flax.types.coin_record import CoinRecord
-from flax.types.coin_spend import CoinSpend
-from flax.types.spend_bundle import SpendBundle
+from sweety.types.announcement import Announcement
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.program import Program, SerializedProgram
+from sweety.types.coin_record import CoinRecord
+from sweety.types.coin_spend import CoinSpend
+from sweety.types.spend_bundle import SpendBundle
 
-from flax.pools.pool_puzzles import (
+from sweety.pools.pool_puzzles import (
     create_waiting_room_inner_puzzle,
     create_full_puzzle,
     SINGLETON_LAUNCHER,
@@ -43,19 +43,19 @@ from flax.pools.pool_puzzles import (
     get_delayed_puz_info_from_launcher_spend,
 )
 
-from flax.util.ints import uint8, uint32, uint64
-from flax.wallet.derive_keys import (
+from sweety.util.ints import uint8, uint32, uint64
+from sweety.wallet.derive_keys import (
     master_sk_to_pooling_authentication_sk,
     find_owner_sk,
 )
-from flax.wallet.sign_coin_spends import sign_coin_spends
-from flax.wallet.transaction_record import TransactionRecord
-from flax.wallet.util.wallet_types import WalletType
-from flax.wallet.wallet import Wallet
-from flax.wallet.wallet_coin_record import WalletCoinRecord
+from sweety.wallet.sign_coin_spends import sign_coin_spends
+from sweety.wallet.transaction_record import TransactionRecord
+from sweety.wallet.util.wallet_types import WalletType
+from sweety.wallet.wallet import Wallet
+from sweety.wallet.wallet_coin_record import WalletCoinRecord
 
-from flax.wallet.wallet_info import WalletInfo
-from flax.wallet.util.transaction_type import TransactionType
+from sweety.wallet.wallet_info import WalletInfo
+from sweety.wallet.util.transaction_type import TransactionType
 
 
 class PoolWallet:
@@ -399,7 +399,7 @@ class PoolWallet:
     ) -> Tuple[TransactionRecord, bytes32, bytes32]:
         """
         A "plot NFT", or pool wallet, represents the idea of a set of plots that all pay to
-        the same pooling puzzle. This puzzle is a `flax singleton` that is
+        the same pooling puzzle. This puzzle is a `sweety singleton` that is
         parameterized with a public key controlled by the user's wallet
         (a `smart coin`). It contains an inner puzzle that can switch between
         paying block rewards to a pool, or to a user's own wallet.

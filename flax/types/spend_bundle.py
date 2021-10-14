@@ -6,11 +6,11 @@ from typing import List
 
 from blspy import AugSchemeMPL, G2Element
 
-from flax.consensus.default_constants import DEFAULT_CONSTANTS
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.streamable import Streamable, dataclass_from_dict, recurse_jsonify, streamable
-from flax.wallet.util.debug_spend_bundle import debug_spend_bundle
+from sweety.consensus.default_constants import DEFAULT_CONSTANTS
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.streamable import Streamable, dataclass_from_dict, recurse_jsonify, streamable
+from sweety.wallet.util.debug_spend_bundle import debug_spend_bundle
 
 from .coin_spend import CoinSpend
 

@@ -5,10 +5,10 @@ from concurrent.futures.thread import ThreadPoolExecutor
 from pathlib import Path
 from typing import Callable, Dict, List, Optional, Tuple
 
-import flax.server.ws_connection as ws  # lgtm [py/import-and-import-from]
-from flax.consensus.constants import ConsensusConstants
-from flax.plotting.manager import PlotManager
-from flax.plotting.util import (
+import sweety.server.ws_connection as ws  # lgtm [py/import-and-import-from]
+from sweety.consensus.constants import ConsensusConstants
+from sweety.plotting.manager import PlotManager
+from sweety.plotting.util import (
     add_plot_directory,
     get_plot_directories,
     remove_plot_directory,
@@ -16,7 +16,7 @@ from flax.plotting.util import (
     PlotsRefreshParameter,
     PlotRefreshResult,
 )
-from flax.util.streamable import dataclass_from_dict
+from sweety.util.streamable import dataclass_from_dict
 
 log = logging.getLogger(__name__)
 
@@ -87,7 +87,7 @@ class Harvester:
         if update_result.loaded_plots > 0:
             self.event_loop.call_soon_threadsafe(self._state_changed, "plots")
 
-    def on_disconnect(self, connection: ws.WSFlaxConnection):
+    def on_disconnect(self, connection: ws.WSSweetyConnection):
         self.log.info(f"peer disconnected {connection.get_peer_logging()}")
         self._state_changed("close_connection")
 

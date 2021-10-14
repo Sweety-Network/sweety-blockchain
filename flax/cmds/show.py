@@ -19,16 +19,16 @@ async def show_async(
 
     from time import localtime, struct_time
     from typing import List, Optional
-    from flax.consensus.block_record import BlockRecord
-    from flax.rpc.full_node_rpc_client import FullNodeRpcClient
-    from flax.server.outbound_message import NodeType
-    from flax.types.full_block import FullBlock
-    from flax.util.bech32m import encode_puzzle_hash
-    from flax.util.byte_types import hexstr_to_bytes
-    from flax.util.config import load_config
-    from flax.util.default_root import DEFAULT_ROOT_PATH
-    from flax.util.ints import uint16
-    from flax.util.misc import format_bytes
+    from sweety.consensus.block_record import BlockRecord
+    from sweety.rpc.full_node_rpc_client import FullNodeRpcClient
+    from sweety.server.outbound_message import NodeType
+    from sweety.types.full_block import FullBlock
+    from sweety.util.bech32m import encode_puzzle_hash
+    from sweety.util.byte_types import hexstr_to_bytes
+    from sweety.util.config import load_config
+    from sweety.util.default_root import DEFAULT_ROOT_PATH
+    from sweety.util.ints import uint16
+    from sweety.util.misc import format_bytes
 
     try:
         config = load_config(DEFAULT_ROOT_PATH, "config.yaml")
@@ -62,7 +62,7 @@ async def show_async(
                 print(f"Current Blockchain Status: Not Synced. Peak height: {peak.height}")
             else:
                 print("\nSearching for an initial chain\n")
-                print("You may be able to expedite with 'flax show -a host:port' using a known node.\n")
+                print("You may be able to expedite with 'sweety show -a host:port' using a known node.\n")
 
             if peak is not None:
                 if peak.is_transaction_block:

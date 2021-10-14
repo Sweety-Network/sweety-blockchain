@@ -1,13 +1,13 @@
 from typing import Callable, Optional
 
-from flax.introducer.introducer import Introducer
-from flax.protocols.introducer_protocol import RequestPeersIntroducer, RespondPeersIntroducer
-from flax.protocols.protocol_message_types import ProtocolMessageTypes
-from flax.server.outbound_message import Message, make_msg
-from flax.server.ws_connection import WSFlaxConnection
-from flax.types.peer_info import TimestampedPeerInfo
-from flax.util.api_decorators import api_request, peer_required
-from flax.util.ints import uint64
+from sweety.introducer.introducer import Introducer
+from sweety.protocols.introducer_protocol import RequestPeersIntroducer, RespondPeersIntroducer
+from sweety.protocols.protocol_message_types import ProtocolMessageTypes
+from sweety.server.outbound_message import Message, make_msg
+from sweety.server.ws_connection import WSSweetyConnection
+from sweety.types.peer_info import TimestampedPeerInfo
+from sweety.util.api_decorators import api_request, peer_required
+from sweety.util.ints import uint64
 
 
 class IntroducerAPI:
@@ -24,7 +24,7 @@ class IntroducerAPI:
     async def request_peers_introducer(
         self,
         request: RequestPeersIntroducer,
-        peer: WSFlaxConnection,
+        peer: WSSweetyConnection,
     ) -> Optional[Message]:
         max_peers = self.introducer.max_peers_to_send
         if self.introducer.server is None or self.introducer.server.introducer_peers is None:

@@ -45,7 +45,7 @@ jobs:
         python3 -m venv ../venv
         . ../venv/bin/activate
         pip3 install setuptools_scm
-        echo "::set-output name=FLAX_INSTALLER_VERSION::$(python3 ./build_scripts/installer-version.py)"
+        echo "::set-output name=SWEETY_INSTALLER_VERSION::$(python3 ./build_scripts/installer-version.py)"
         deactivate
     - name: Test for secrets access
       id: check_secrets

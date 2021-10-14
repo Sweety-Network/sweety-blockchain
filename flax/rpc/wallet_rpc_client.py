@@ -1,20 +1,20 @@
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 
-from flax.pools.pool_wallet_info import PoolWalletInfo
-from flax.rpc.rpc_client import RpcClient
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.bech32m import decode_puzzle_hash
-from flax.util.ints import uint32, uint64
-from flax.wallet.transaction_record import TransactionRecord
+from sweety.pools.pool_wallet_info import PoolWalletInfo
+from sweety.rpc.rpc_client import RpcClient
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.bech32m import decode_puzzle_hash
+from sweety.util.ints import uint32, uint64
+from sweety.wallet.transaction_record import TransactionRecord
 
 
 class WalletRpcClient(RpcClient):
     """
-    Client to Flax RPC, connects to a local wallet. Uses HTTP/JSON, and converts back from
+    Client to Sweety RPC, connects to a local wallet. Uses HTTP/JSON, and converts back from
     JSON into native python objects before returning. All api calls use POST requests.
-    Note that this is not the same as the peer protocol, or wallet protocol (which run Flax's
+    Note that this is not the same as the peer protocol, or wallet protocol (which run Sweety's
     protocol on top of TCP), it's a separate protocol on top of HTTP that provides easy access
     to the full node.
     """

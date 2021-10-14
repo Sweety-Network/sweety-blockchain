@@ -2,18 +2,18 @@ import asyncio
 import random
 from time import time
 from pathlib import Path
-from flax.full_node.coin_store import CoinStore
+from sweety.full_node.coin_store import CoinStore
 from typing import List
 import os
 import sys
 
 import aiosqlite
-from flax.util.db_wrapper import DBWrapper
-from flax.consensus.coinbase import create_farmer_coin, create_pool_coin
-from flax.consensus.default_constants import DEFAULT_CONSTANTS
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.blockchain_format.coin import Coin
-from flax.util.ints import uint64
+from sweety.util.db_wrapper import DBWrapper
+from sweety.consensus.coinbase import create_farmer_coin, create_pool_coin
+from sweety.consensus.default_constants import DEFAULT_CONSTANTS
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.blockchain_format.coin import Coin
+from sweety.util.ints import uint64
 
 
 NUM_ITERS = 200

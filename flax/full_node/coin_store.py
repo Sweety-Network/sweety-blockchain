@@ -1,12 +1,12 @@
 from typing import List, Optional, Set, Dict
 import aiosqlite
-from flax.protocols.wallet_protocol import CoinState
-from flax.types.blockchain_format.coin import Coin
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.types.coin_record import CoinRecord
-from flax.util.db_wrapper import DBWrapper
-from flax.util.ints import uint32, uint64
-from flax.util.lru_cache import LRUCache
+from sweety.protocols.wallet_protocol import CoinState
+from sweety.types.blockchain_format.coin import Coin
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.types.coin_record import CoinRecord
+from sweety.util.db_wrapper import DBWrapper
+from sweety.util.ints import uint32, uint64
+from sweety.util.lru_cache import LRUCache
 from time import time
 import logging
 

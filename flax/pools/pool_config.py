@@ -5,10 +5,10 @@ from typing import List
 
 from blspy import G1Element
 
-from flax.types.blockchain_format.sized_bytes import bytes32
-from flax.util.byte_types import hexstr_to_bytes
-from flax.util.config import load_config, save_config
-from flax.util.streamable import Streamable, streamable
+from sweety.types.blockchain_format.sized_bytes import bytes32
+from sweety.util.byte_types import hexstr_to_bytes
+from sweety.util.config import load_config, save_config
+from sweety.util.streamable import Streamable, streamable
 
 """
 Config example
